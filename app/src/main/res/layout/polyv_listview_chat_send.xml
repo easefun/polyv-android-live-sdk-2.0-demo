@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/common_margin_tb"
+        android:background="@drawable/polyv_chat_time_block"
+        android:text="2016/9/11 10:10:18"
+        android:textColor="@color/top_right_text_color_black"
+        android:textSize="@dimen/center_right_text_size_l"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/common_margin_tb"
+        android:layout_marginRight="@dimen/common_margin_lr"
+        android:layout_marginTop="@dimen/common_margin_tb">
+
+        <pl.droidsonroids.gif.GifSpanTextView
+            android:id="@+id/tv_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/common_margin_lr"
+            android:layout_marginTop="@dimen/center_bottom_margin_top_s_s"
+            android:background="@drawable/polyv_chatto_bg_normal"
+            android:gravity="center_vertical"
+            android:maxWidth="@dimen/tv_max_width"
+            android:minWidth="@dimen/tv_min_width"
+            android:paddingBottom="@dimen/common_padding"
+            android:paddingLeft="@dimen/common_padding"
+            android:paddingRight="@dimen/common_padding_left"
+            android:paddingTop="@dimen/common_padding"
+            android:text="这是一条很长的信息这是一条很长的信息这是一条很长的信息这是一条很长的信息这是一条很长的信息这是一条很长的信息这是一条很长的信息"
+            android:textColor="@color/center_view_color_blue"
+            android:textSize="@dimen/top_text_size" />
+
+        <ImageView
+            android:id="@+id/iv_resend"
+            android:layout_width="@dimen/pb_wh"
+            android:layout_height="@dimen/pb_wh"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/tv_msg"
+            android:src="@drawable/polyv_iv_resend"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>

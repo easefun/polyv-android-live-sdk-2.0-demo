@@ -1,0 +1,41 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="talk_common_margin">5dp</dimen>
+    <dimen name="corners_common">3dp</dimen>
+    <dimen name="bottom_text_size">18sp</dimen>
+    <dimen name="talk_et_margin_right">3dp</dimen>
+    <dimen name="cursor_common_width">1dp</dimen>
+    <dimen name="top_center_player_height">204dp</dimen>
+    <dimen name="top_left_iv_width">36.6dp</dimen>
+    <dimen name="top_left_iv_height">36.6dp</dimen>
+    <dimen name="common_margin_lr">13.3dp</dimen>
+    <dimen name="common_margin_tb">13.3dp</dimen>
+    <dimen name="top_text_size">16sp</dimen>
+    <dimen name="center_bottom_margin_left_s">6.6dp</dimen>
+    <dimen name="center_right_text_size_l">12.6sp</dimen>
+    <dimen name="center_bottom_margin_top_s_s">2.6dp</dimen>
+    <dimen name="bottom_layout_height">51.3dp</dimen>
+    <dimen name="corners_common_m">9dp</dimen>
+    <dimen name="center_view_height">12dp</dimen>
+    <dimen name="center_layout_width_l">120dp</dimen>
+    <dimen name="center_layout_height_l">100dp</dimen>
+
+    <!-- new -->
+    <dimen name="common_padding_left">18dp</dimen>
+    <dimen name="common_padding">8dp</dimen>
+    <dimen name="tv_max_width">280dp</dimen>
+    <dimen name="tv_min_width">50dp</dimen>
+    <dimen name="pb_wh">25dp</dimen>
+    <dimen name="talk_common_margin_s">2.5dp</dimen>
+    <dimen name="tv_text_size">25sp</dimen>
+    <dimen name="tv_margin_top_l">70dp</dimen>
+    <dimen name="tv_margin_top">20dp</dimen>
+    <dimen name="ll_translate_y">-40dp</dimen>
+    <dimen name="vp_layout_height">200dp</dimen>
+    <dimen name="iv_wh">30dp</dimen>
+    <dimen name="iv_wh_s">20dp</dimen>
+    <dimen name="ll_layout_height">40dp</dimen>
+</resources>

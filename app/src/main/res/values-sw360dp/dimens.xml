@@ -1,0 +1,6 @@
+<resources>
+
+    <dimen name="top_center_player_height">204dp</dimen>
+    <dimen name="bottom_layout_height">51.3dp</dimen>
+
+</resources>

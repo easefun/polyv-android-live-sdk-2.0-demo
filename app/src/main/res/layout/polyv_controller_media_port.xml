@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_port"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@null"
+    android:visibility="visible">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_layout_height"
+        android:layout_alignParentBottom="true"
+        android:alpha="0.7"
+        android:background="@color/top_left_layout_color_black">
+
+        <ImageView
+            android:id="@+id/iv_play"
+            style="@style/iv_click_controller_port_bottom"
+            android:src="@drawable/polyv_play_bt_pic_port" />
+
+        <ImageView
+            android:id="@+id/iv_land"
+            style="@style/iv_click_controller_port_bottom"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/polyv_screen_pic" />
+
+        <ImageView
+            android:id="@+id/iv_dmswitch"
+            style="@style/iv_click_controller_port_bottom"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/center_bottom_margin_left_s"
+            android:layout_toLeftOf="@id/iv_land"
+            android:background="@null"
+            android:src="@drawable/polyv_dm_switch" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
