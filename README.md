@@ -2,7 +2,7 @@
 polyv-android-live-sdk-2.0-demo
 ===
 #### _polyv-android-live-sdk-2.0_（以下简称**liveSDK2.0**）是什么？
-liveSDK2.0是Polyv为开发者用户提供的直播观看SDK ，是jar文件。易于集成，内部包含`直播播放` `聊天室`功能。首先需要在[Polyv官网](www.polyv.net)注册账户并开通直播功能，然后集成LiveSDK2.0到你的项目中。
+liveSDK2.0是Polyv为开发者用户提供的直播观看SDK ，是jar文件。易于集成，内部包含`直播播放` `聊天室`功能。首先需要在[Polyv官网](http://www.polyv.net)注册账户并开通直播功能，然后集成LiveSDK2.0到你的项目中。
 #### _polyv-android-live-sdk-2.0-demo_（以下简称**liveSDK2.0demo**）是什么？
 liveSDK2.0demo是liveSDK2.0的demo示例Android studio项目工程，其中包含了最新liveSDK2.0并且演示了如何在项目中集成liveSDK2.0。
 
