@@ -7,12 +7,10 @@ import java.util.List;
 import com.easefun.polyvsdk.live.adapter.PolyvChatAdapter;
 import com.easefun.polyvsdk.live.adapter.PolyvEmoGridViewAdapter;
 import com.easefun.polyvsdk.live.adapter.PolyvEmoPagerAdapter;
-import com.easefun.polyvsdk.live.bean.PolyvChatMessage;
-import com.easefun.polyvsdk.live.util.PolyvChatManager;
 import com.easefun.polyvsdk.live.R;
 import com.easefun.polyvsdk.live.adapter.PolyvChatAdapter.OnItemClickListener;
-import com.easefun.polyvsdk.live.util.PolyvChatManager.ChatManagerListener;
-import com.easefun.polyvsdk.live.util.PolyvChatManager.ConnectStatus;
+import com.easefun.polyvsdk.live.chat.PolyvChatManager;
+import com.easefun.polyvsdk.live.chat.PolyvChatMessage;
 import com.easefun.polyvsdk.live.util.PolyvFaceManager;
 
 import android.content.Context;
@@ -138,10 +136,10 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
         this.roomId = roomId;
         this.nickName = nickName;
         this.chatManager = PolyvChatManager.getInstance();
-        this.chatManager.setOnChatManagerListener(new ChatManagerListener() {
+        this.chatManager.setOnChatManagerListener(new PolyvChatManager.ChatManagerListener() {
 
             @Override
-            public void connectStatus(ConnectStatus connect_status) {
+            public void connectStatus(PolyvChatManager.ConnectStatus connect_status) {
                 switch (connect_status) {
                     case LOGINING:
                         handler.sendEmptyMessage(LOGINING);

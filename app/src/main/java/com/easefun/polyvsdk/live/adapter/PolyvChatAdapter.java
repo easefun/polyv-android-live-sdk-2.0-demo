@@ -1,18 +1,5 @@
 package com.easefun.polyvsdk.live.adapter;
 
-import java.util.List;
-
-import com.easefun.polyvsdk.live.bean.PolyvChatMessage;
-import com.easefun.polyvsdk.live.util.PolyvChatManager;
-import com.easefun.polyvsdk.live.fragment.PolyvDanmuFragment;
-import com.easefun.polyvsdk.live.util.PolyvRoundDisplayerUtils;
-import com.easefun.polyvsdk.live.util.PolyvTextImageLoader;
-import com.easefun.polyvsdk.live.R;
-import com.easefun.polyvsdk.live.util.PolyvTimeUtils;
-import com.easefun.polyvsdk.live.util.PolyvViewHolder;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import android.content.Context;
 import android.graphics.Bitmap.Config;
 import android.view.LayoutInflater;
@@ -24,6 +11,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.easefun.polyvsdk.live.R;
+import com.easefun.polyvsdk.live.chat.PolyvChatManager;
+import com.easefun.polyvsdk.live.chat.PolyvChatMessage;
+import com.easefun.polyvsdk.live.fragment.PolyvDanmuFragment;
+import com.easefun.polyvsdk.live.util.PolyvRoundDisplayerUtils;
+import com.easefun.polyvsdk.live.util.PolyvTextImageLoader;
+import com.easefun.polyvsdk.live.util.PolyvTimeUtils;
+import com.easefun.polyvsdk.live.util.PolyvViewHolder;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.List;
 
 import pl.droidsonroids.gif.GifSpanTextView;
 
