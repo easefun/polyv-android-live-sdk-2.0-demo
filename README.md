@@ -22,6 +22,7 @@ liveSDK2.0是liveSDK1.0的升级版，在liveSDK1.0的基础上，进行升级�
   * 所有监听事件一目了然
 * 全新优美的播放器界面。
 * Android Studio项目。
+
 #### 为什么要升级到liveSDK2.0
 集成门槛和开发难度大大降低。
 liveSDK1.0demo和liveSDK1.0不再进行功能更新，只维护bug。
@@ -32,4 +33,5 @@ liveSDK1.0demo和liveSDK1.0不再进行功能更新，只维护bug。
 更多细节请在liveSDK2.0demo中查看。
 
 ***
-#### 更多关于liveSDK2.0demo和liveSDK2.0的详细介绍请看[Wiki](https://github.com/easefun/polyv-android-sdk-demo/wiki)。
+#### 更多关于liveSDK2.0demo和liveSDK2.0的详细介绍请看[Wiki](https://github.com/easefun/polyv-android-live-sdk-2.0-demo/wiki)。
+2.0.1版API文档请看[v2.0.1 API](http://demo.polyv.net/polyv/android/live/sdk/2.0.1/api/index.html)。
