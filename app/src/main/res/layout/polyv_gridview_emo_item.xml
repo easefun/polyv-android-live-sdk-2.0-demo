@@ -7,7 +7,7 @@
         android:id="@+id/iv_emo"
         android:layout_width="@dimen/ll_layout_height"
         android:layout_height="@dimen/ll_layout_height"
-        android:background="@drawable/polyv_commom_click_color_gray"
+        android:background="@color/top_layout_color_white"
         android:scaleType="centerInside"
         android:src="@drawable/polyv_1" />
 

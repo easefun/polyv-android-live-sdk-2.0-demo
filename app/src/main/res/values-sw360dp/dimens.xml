@@ -2,5 +2,29 @@
 
     <dimen name="top_center_player_height">204dp</dimen>
     <dimen name="bottom_layout_height">51.3dp</dimen>
-
+    <dimen name="iv_margin_top_l">123.3dp</dimen>
+    <dimen name="ll_margin_top">73.3dp</dimen>
+    <dimen name="et_margin_top">10dp</dimen>
+    <dimen name="et_padding">9.3dp</dimen>
+    <dimen name="et_height">38.7dp</dimen>
+    <dimen name="tv_textsize">13.3sp</dimen>
+    <dimen name="tv_margintop">19.3dp</dimen>
+    <dimen name="common_padding">26.3dp</dimen>
+    <dimen name="iv_marginbottom">23.3dp</dimen>
+    <dimen name="ll_height">48dp</dimen>
+    <dimen name="iv_marginleft">10.6dp</dimen>
+    <dimen name="iv_marginright">12dp</dimen>
+    <dimen name="iv_marginleft_l">12.6dp</dimen>
+    <dimen name="iv_marginright_l">16dp</dimen>
+    <dimen name="et_height_s">30dp</dimen>
+    <dimen name="tv_margintop_l">20dp</dimen>
+    <dimen name="tv_textsize_s">10.3sp</dimen>
+    <dimen name="iv_marginleft_l_l">16.6dp</dimen>
+    <dimen name="iv_height">34dp</dimen>
+    <dimen name="common_margin">6.6dp</dimen>
+    <dimen name="et_marginright">10dp</dimen>
+    <dimen name="et_marginleft">50dp</dimen>
+    <dimen name="et_maxlenght">320dp</dimen>
+    <dimen name="iv_height_s">20dp</dimen>
+    <dimen name="danmaku_tv_textsize">13.3sp</dimen>
 </resources>

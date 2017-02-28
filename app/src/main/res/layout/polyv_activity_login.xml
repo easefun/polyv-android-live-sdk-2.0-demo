@@ -5,66 +5,66 @@
     android:background="@color/top_sline_color_gray">
 
     <ImageView
+        android:id="@+id/iv_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/tv_margin_top_l"
+        android:layout_marginTop="@dimen/iv_margin_top_l"
         android:src="@drawable/poly_live_logo" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@id/iv_logo"
+        android:layout_marginTop="@dimen/ll_margin_top"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/common_margin_lr"
-        android:paddingRight="@dimen/common_margin_lr"
-        android:translationY="@dimen/ll_translate_y">
+        android:paddingLeft="@dimen/common_padding"
+        android:paddingRight="@dimen/common_padding">
 
         <EditText
             android:id="@+id/et_userid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/polyv_et_corners"
+            android:layout_height="@dimen/et_height"
+            android:background="@drawable/polyv_et_corners_n"
             android:digits="1234567890qwertyuiopasdfghjklzxcvbnm"
             android:hint="用户ID"
-            android:padding="@dimen/talk_common_margin"
-            android:textColor="@color/top_text_color_black"
+            android:padding="@dimen/et_padding"
+            android:textColor="@color/top_et_color_gray"
+            android:textColorHint="@color/top_et_color_gray"
             android:textCursorDrawable="@drawable/polyv_et_cursor_color"
-            android:textSize="@dimen/bottom_text_size" />
+            android:textSize="@dimen/tv_textsize" />
 
         <EditText
             android:id="@+id/et_channelid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_margin_tb"
-            android:background="@drawable/polyv_et_corners"
+            android:layout_height="@dimen/et_height"
+            android:layout_marginTop="@dimen/et_margin_top"
+            android:background="@drawable/polyv_et_corners_n"
             android:hint="频道号"
             android:inputType="number"
-            android:padding="@dimen/talk_common_margin"
-            android:textColor="@color/top_text_color_black"
+            android:padding="@dimen/et_padding"
+            android:textColor="@color/top_et_color_gray"
+            android:textColorHint="@color/top_et_color_gray"
             android:textCursorDrawable="@drawable/polyv_et_cursor_color"
-            android:textSize="@dimen/bottom_text_size" />
+            android:textSize="@dimen/tv_textsize" />
 
         <TextView
             android:id="@+id/tv_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/tv_margin_top"
+            android:layout_height="@dimen/et_height"
+            android:layout_marginTop="@dimen/tv_margintop"
             android:background="@drawable/polyv_tv_corners"
-            android:gravity="center_horizontal"
-            android:padding="@dimen/common_padding"
+            android:gravity="center"
             android:text="登录"
             android:textColor="@color/top_layout_color_white"
-            android:textSize="@dimen/bottom_text_size" />
+            android:textSize="@dimen/tv_textsize" />
     </LinearLayout>
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/common_margin_tb"
-        android:text="©POLYV保利威视"
-        android:textColor="@color/top_right_text_color_black"
-        android:textSize="@dimen/center_right_text_size_l" />
+        android:layout_marginBottom="@dimen/iv_marginbottom"
+        android:src="@drawable/polyv_footer" />
 </RelativeLayout>

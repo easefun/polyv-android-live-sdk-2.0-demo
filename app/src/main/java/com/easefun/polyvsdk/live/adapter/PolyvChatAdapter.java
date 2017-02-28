@@ -84,7 +84,7 @@ public class PolyvChatAdapter extends BaseAdapter implements OnClickListener {
 
     @Override
     public int getViewTypeCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -93,9 +93,15 @@ public class PolyvChatAdapter extends BaseAdapter implements OnClickListener {
     }
 
     private View getChatView(int position) {
-        return getItemViewType(position) == PolyvChatMessage.CHATTYPE_RECEIVE
-                ? inflater.inflate(R.layout.polyv_listivew_chat_receive, null)
-                : inflater.inflate(R.layout.polyv_listview_chat_send, null);
+        switch (getItemViewType(position)) {
+            case PolyvChatMessage.CHATTYPE_RECEIVE:
+                return inflater.inflate(R.layout.polyv_listivew_chat_receive, null);
+            case PolyvChatMessage.CHATTYPE_RECEIVE_NOTICE:
+                return inflater.inflate(R.layout.polyv_listview_chat_receive_notice, null);
+            case PolyvChatMessage.CHATTYPE_SEND:
+                return inflater.inflate(R.layout.polyv_listview_chat_send, null);
+        }
+        return null;
     }
 
     @Override
@@ -110,13 +116,16 @@ public class PolyvChatAdapter extends BaseAdapter implements OnClickListener {
         final GifSpanTextView tv_msg = PolyvViewHolder.get(convertView, R.id.tv_msg);
         final TextView tv_time = PolyvViewHolder.get(convertView, R.id.tv_time);
         final TextView tv_name = PolyvViewHolder.get(convertView, R.id.tv_name);
+        final TextView tv_notice = PolyvViewHolder.get(convertView, R.id.tv_notice);
         ll_parent.setOnClickListener(this);
-        textImageLoader.displayTextImage(message.getValues()[0], tv_msg);
-        tv_time.setText(PolyvTimeUtils.friendlyTime(message.getTime()));
-        if (message.isShowTime()) {
-            tv_time.setVisibility(View.VISIBLE);
-        }else{
-            tv_time.setVisibility(View.GONE);
+        if (message.getChatType() != PolyvChatMessage.CHATTYPE_RECEIVE_NOTICE) {
+            textImageLoader.displayTextImage(message.getValues()[0], tv_msg);
+            tv_time.setText(PolyvTimeUtils.friendlyTime(message.getTime()));
+            if (message.isShowTime()) {
+                tv_time.setVisibility(View.VISIBLE);
+            } else {
+                tv_time.setVisibility(View.GONE);
+            }
         }
         switch (message.getChatType()) {
             case PolyvChatMessage.CHATTYPE_RECEIVE:
@@ -124,10 +133,14 @@ public class PolyvChatAdapter extends BaseAdapter implements OnClickListener {
                 ImageLoader.getInstance().displayImage(user.getPic(), iv_avatar, options);
                 break;
 
+            case PolyvChatMessage.CHATTYPE_RECEIVE_NOTICE:
+                tv_notice.setText(message.getValues()[0]);
+                break;
+
             case PolyvChatMessage.CHATTYPE_SEND:
                 if (!message.isSendSuccess()) {
                     iv_resend.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     iv_resend.setVisibility(View.GONE);
                 }
                 iv_resend.setOnClickListener(new OnClickListener() {

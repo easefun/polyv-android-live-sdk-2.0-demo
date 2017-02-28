@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
     }
     buildTypes {
         release {
@@ -30,6 +30,7 @@ dependencies {
     }
 
     compile project(':polyvAndroidSDKGif1.0')
-    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.5.1'
-    compile 'tv.danmaku.ijk.media:ijkplayer-exo:0.5.1'
+    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.7.7.1'
+    compile 'tv.danmaku.ijk.media:ijkplayer-exo:0.7.7.1'
+    compile 'com.github.ctiao:DanmakuFlameMaster:0.6.2'
 }

@@ -68,7 +68,7 @@ public class PolyvPlayerActivity extends FragmentActivity {
         uid = getIntent().getStringExtra("uid");
         cid = getIntent().getStringExtra("cid");
         // 初始化广告监测器
-        AdmasterSdk.init(this, "");
+        AdmasterSdk.init(getApplicationContext(), "");
 
         addFragment();
         findIdAndNew();
@@ -77,7 +77,7 @@ public class PolyvPlayerActivity extends FragmentActivity {
 
     private void addFragment() {
         polyvChatFragment = new PolyvChatFragment();
-        // 初始化聊天室的配置
+        // 初始化聊天室的配置，uid可以使用学员的userId替换
         polyvChatFragment.initChatConfig(uid, cid, "游客");
         danmuFragment = new PolyvDanmuFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.fl_chat, polyvChatFragment, "chatFragment")
@@ -281,6 +281,10 @@ public class PolyvPlayerActivity extends FragmentActivity {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (PolyvScreenUtils.isLandscape(this)) {
                 mediaController.changeToPortrait();
+                return true;
+            }
+            if(PolyvScreenUtils.isPortrait(this) && polyvChatFragment.emoLayoutIsVisible()){
+                polyvChatFragment.resetEmoLayout(true);
                 return true;
             }
         }

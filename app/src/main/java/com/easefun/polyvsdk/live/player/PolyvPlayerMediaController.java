@@ -93,6 +93,13 @@ public class PolyvPlayerMediaController extends PolyvLiveMediaController impleme
      */
     public void changeToLandscape() {
         PolyvScreenUtils.setLandscape(videoActivity);
+        //初始为横屏时，状态栏需要隐藏
+        PolyvScreenUtils.hideStatusBar(videoActivity);
+        //初始为横屏时，控制栏的宽高需要设置
+        initLandScapeWH();
+    }
+
+    private void initLandScapeWH() {
         // 获取横屏下的屏幕宽高
         int[] wh = PolyvScreenUtils.getNormalWH(videoActivity);
         //这里的LayoutParams为parentView的父类的LayoutParams
@@ -105,9 +112,6 @@ public class PolyvPlayerMediaController extends PolyvLiveMediaController impleme
      */
     public void changeToPortrait() {
         PolyvScreenUtils.setPortrait(videoActivity);
-        //这里宽高设置是polyv_fragment_player.xml布局文件中parentView的初始值
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) mContext.getResources().getDimension(R.dimen.top_center_player_height));
-        parentView.setLayoutParams(lp);
     }
 
     //根据屏幕状态改变控制栏布局
@@ -115,8 +119,12 @@ public class PolyvPlayerMediaController extends PolyvLiveMediaController impleme
         hide();
         PolyvScreenUtils.reSetStatusBar(videoActivity);
         if (PolyvScreenUtils.isLandscape(mContext)) {
+            initLandScapeWH();
             iv_land.setSelected(true);
         } else {
+            //这里宽高设置是polyv_fragment_player.xml布局文件中parentView的初始值
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) mContext.getResources().getDimension(R.dimen.top_center_player_height));
+            parentView.setLayoutParams(lp);
             iv_land.setSelected(false);
         }
     }

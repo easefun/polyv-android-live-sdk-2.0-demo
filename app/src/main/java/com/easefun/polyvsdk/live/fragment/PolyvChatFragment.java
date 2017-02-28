@@ -1,21 +1,9 @@
 package com.easefun.polyvsdk.live.fragment;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.easefun.polyvsdk.live.adapter.PolyvChatAdapter;
-import com.easefun.polyvsdk.live.adapter.PolyvEmoGridViewAdapter;
-import com.easefun.polyvsdk.live.adapter.PolyvEmoPagerAdapter;
-import com.easefun.polyvsdk.live.R;
-import com.easefun.polyvsdk.live.adapter.PolyvChatAdapter.OnItemClickListener;
-import com.easefun.polyvsdk.live.chat.PolyvChatManager;
-import com.easefun.polyvsdk.live.chat.PolyvChatMessage;
-import com.easefun.polyvsdk.live.util.PolyvFaceManager;
-
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources.NotFoundException;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -44,13 +33,29 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.easefun.polyvsdk.live.R;
+import com.easefun.polyvsdk.live.adapter.PolyvChatAdapter;
+import com.easefun.polyvsdk.live.adapter.PolyvChatAdapter.OnItemClickListener;
+import com.easefun.polyvsdk.live.adapter.PolyvEmoGridViewAdapter;
+import com.easefun.polyvsdk.live.adapter.PolyvEmoPagerAdapter;
+import com.easefun.polyvsdk.live.chat.PolyvChatManager;
+import com.easefun.polyvsdk.live.chat.PolyvChatMessage;
+import com.easefun.polyvsdk.live.util.PolyvFaceManager;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifEditText;
 import pl.droidsonroids.gif.GifImageSpan;
 import pl.droidsonroids.gif.RelativeImageSpan;
 
-/** 聊天Fragment */
+/**
+ * 聊天Fragment
+ */
 public class PolyvChatFragment extends Fragment implements OnClickListener {
+    private static final int DISCONNECT = 5;
     private static final int RECEIVEMESSAGE = 6;
     private static final int LOGINING = 12;
     private static final int LOGINSUCCESS = 13;
@@ -65,8 +70,8 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
     // 聊天信息列表集合
     private List<PolyvChatMessage> messages;
 
-    // 发送按钮，空信息控件，聊天室状态
-    private TextView tv_send, tv_empty, tv_status;
+    // 空信息控件，聊天室状态
+    private TextView tv_empty, tv_status;
     // 信息编辑控件
     private GifEditText et_talk;
     // danmuFragment
@@ -75,14 +80,14 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
     private PolyvChatManager chatManager;
     // 用户id，频道id，昵称(自定义)
     private String userId, roomId, nickName;
-    private Animation collapseAnimation, scaleMaxAnimation, scaleMinAnimation;
+    private Animation collapseAnimation;
 
     // 表情ViewPager
     private ViewPager vp_emo;
     // 表情的父布局
     private RelativeLayout rl_bot;
-    // 表情页的下方圆点...，表情开关
-    private ImageView iv_page1, iv_page2, iv_page3, iv_page4, iv_page5, iv_emoswitch;
+    // 表情页的下方圆点...，表情开关，发送按钮
+    private ImageView iv_page1, iv_page2, iv_page3, iv_page4, iv_page5, iv_emoswitch, iv_send;
     // 表情的文本长度
     private int emoLength;
     // 列
@@ -98,8 +103,43 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
             switch (msg.what) {
                 case RECEIVEMESSAGE:
                     PolyvChatMessage chatMessage = (PolyvChatMessage) msg.obj;
+                    if (chatMessage.getChatType() == PolyvChatMessage.CHATTYPE_RECEIVE) {
+                        danmuFragment.sendDanmaku(chatMessage.getValues()[0]);
+                    } else if (chatMessage.getChatType() == PolyvChatMessage.CHATTYPE_RECEIVE_NOTICE) {
+                        switch (chatMessage.getEvent()) {
+                            // 用户被踢，不能发送信息，再次连接聊天室可恢复
+                            case PolyvChatMessage.EVENT_KICK:
+                                String nick = chatMessage.getUser().getNick();
+                                if (chatMessage.getUser().getUserId().equals(userId))
+                                    nick = nick + "(自己)";
+                                // 这里需要自定义显示的信息
+                                chatMessage.setValues(new String[]{nick + "被踢"});
+                                break;
+                            // 用户被禁言，不能接收或发送信息，不能再次连接聊天室，需要在后台恢复
+                            case PolyvChatMessage.EVENT_SHIELD:
+                                String nick2 = chatMessage.getUser().getNick();
+                                if (chatMessage.getUser().getUserId().equals(userId))
+                                    nick2 = nick2 + "(自己)";
+                                chatMessage.setValues(new String[]{nick2 + "被禁言"});
+                                break;
+                            // 聊天室关闭时，不能接收或发送信息
+                            case PolyvChatMessage.EVENT_CLOSEROOM:
+                                boolean isClose = chatMessage.getValue().isClosed();
+                                if (isClose)
+                                    chatMessage.setValues(new String[]{"聊天室关闭"});
+                                else
+                                    chatMessage.setValues(new String[]{"聊天室开启"});
+                                break;
+                            // 公告
+                            case PolyvChatMessage.EVENT_GONGGAO:
+                                chatMessage.setValues(new String[]{"公告 " + chatMessage.getContent()});
+                                break;
+                        }
+                    }
                     polyvChatAdapter.add(chatMessage);
-                    danmuFragment.sendDanmaku(chatMessage.getValues()[0]);
+                    break;
+                case DISCONNECT:
+                    tv_status.setText("连接失败");
                     break;
                 case LOGINING:
                     tv_status.setText("正在登录中...");
@@ -141,6 +181,9 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
             @Override
             public void connectStatus(PolyvChatManager.ConnectStatus connect_status) {
                 switch (connect_status) {
+                    case DISCONNECT:
+                        handler.sendEmptyMessage(DISCONNECT);
+                        break;
                     case LOGINING:
                         handler.sendEmptyMessage(LOGINING);
                         break;
@@ -199,7 +242,7 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
         lv_chat = (ListView) view.findViewById(R.id.lv_chat);
         tv_empty = (TextView) view.findViewById(R.id.tv_empty);
         tv_status = (TextView) view.findViewById(R.id.tv_status);
-        tv_send = (TextView) view.findViewById(R.id.tv_send);
+        iv_send = (ImageView) view.findViewById(R.id.iv_send);
         et_talk = (GifEditText) view.findViewById(R.id.et_talk);
         vp_emo = (ViewPager) view.findViewById(R.id.vp_emo);
         iv_page1 = (ImageView) view.findViewById(R.id.iv_page1);
@@ -213,9 +256,6 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
         messages = new ArrayList<PolyvChatMessage>();
         collapseAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.polyv_collapse);
         collapseAnimation.setAnimationListener(new ViewAnimationListener(tv_status));
-        scaleMaxAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.polyv_scale_max);
-        scaleMinAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.polyv_scale_min);
-        scaleMinAnimation.setAnimationListener(new ViewAnimationListener(rl_bot));
     }
 
     private class ViewAnimationListener implements AnimationListener {
@@ -231,7 +271,7 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
 
         @Override
         public void onAnimationEnd(Animation animation) {
-            view.setVisibility(View.GONE);
+            view.setVisibility(View.INVISIBLE);
         }
 
         @Override
@@ -271,15 +311,18 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
     //添加表情
     private void appendEmo(String emoKey) {
         SpannableStringBuilder span = new SpannableStringBuilder(emoKey);
+        int textSize = (int) et_talk.getTextSize();
+        Drawable drawable = null;
+        ImageSpan imageSpan = null;
         try {
-            int textSize = (int) et_talk.getTextSize();
-            GifDrawable gifDrawable = new GifDrawable(getResources(), PolyvFaceManager.getInstance().getFaceId(emoKey));
-            gifDrawable.setBounds(0, 0, textSize + 8, textSize + 8);
-            GifImageSpan imageSpan = new GifImageSpan(gifDrawable, RelativeImageSpan.ALIGN_CENTER);
-            span.setSpan(imageSpan, 0, span.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            drawable = new GifDrawable(getResources(), PolyvFaceManager.getInstance().getFaceId(emoKey));
+            imageSpan = new GifImageSpan(drawable, RelativeImageSpan.ALIGN_CENTER);
         } catch (NotFoundException | IOException e) {
-            e.printStackTrace();
+            drawable = getResources().getDrawable(PolyvFaceManager.getInstance().getFaceId(emoKey));
+            imageSpan = new RelativeImageSpan(drawable, RelativeImageSpan.ALIGN_CENTER);
         }
+        drawable.setBounds(0, 0, textSize + 8, textSize + 8);
+        span.setSpan(imageSpan, 0, span.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         int selectionStart = et_talk.getSelectionStart();
         int selectionEnd = et_talk.getSelectionEnd();
         if (selectionStart != selectionEnd)
@@ -314,7 +357,7 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                 return false;
             }
         });
-        tv_send.setOnClickListener(this);
+        iv_send.setOnClickListener(this);
         // 表情
         List<View> lists = new ArrayList<>();
         for (int i = 0; i < pages; i++) {
@@ -377,16 +420,13 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
      *
      * @param isgone 以隐藏方式
      */
-    private void resetEmoLayout(boolean isgone) {
+    public void resetEmoLayout(boolean isgone) {
         if (rl_bot.getVisibility() == View.VISIBLE || isgone) {
-            rl_bot.clearAnimation();
-            rl_bot.startAnimation(scaleMinAnimation);
+            rl_bot.setVisibility(View.GONE);
         } else {
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
             rl_bot.setVisibility(View.VISIBLE);
             closeKeybord(et_talk, getContext());
-            rl_bot.clearAnimation();
-            rl_bot.startAnimation(scaleMaxAnimation);
             et_talk.requestFocus();
         }
     }
@@ -424,6 +464,11 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
         imm.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
     }
 
+    //表情布局是否可见
+    public boolean emoLayoutIsVisible() {
+        return rl_bot.getVisibility() == View.VISIBLE ? true : false;
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -443,6 +488,7 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
         super.onDestroy();
         //关闭聊天室
         chatManager.disconnect();
+        chatManager.setOnChatManagerListener(null);
     }
 
     @Override
@@ -457,7 +503,7 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_send:
+            case R.id.iv_send:
                 sendMsg();
                 break;
             case R.id.iv_page1:

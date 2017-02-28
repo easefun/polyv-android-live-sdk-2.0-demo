@@ -253,7 +253,7 @@ public class PolyvScreenUtils {
 	}
 
 	// 隐藏状态栏
-	private static void hideStatusBar(Activity activity) {
+	public static void hideStatusBar(Activity activity) {
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
 			activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 					WindowManager.LayoutParams.FLAG_FULLSCREEN);
