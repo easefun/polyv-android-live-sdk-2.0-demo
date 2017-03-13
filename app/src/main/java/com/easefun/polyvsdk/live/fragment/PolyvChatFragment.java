@@ -139,7 +139,9 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                     polyvChatAdapter.add(chatMessage);
                     break;
                 case DISCONNECT:
-                    tv_status.setText("连接失败");
+                    // ((PolyvChatManager.ConnectStatus) msg.obj).getDescribe()的值与PolyvCahtManager的DISCONNECT_常量对应
+                    tv_status.setText("连接失败(" + ((PolyvChatManager.ConnectStatus) msg.obj).getDescribe() + ")");
+                    tv_status.setVisibility(View.VISIBLE);
                     break;
                 case LOGINING:
                     tv_status.setText("正在登录中...");
@@ -182,7 +184,7 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
             public void connectStatus(PolyvChatManager.ConnectStatus connect_status) {
                 switch (connect_status) {
                     case DISCONNECT:
-                        handler.sendEmptyMessage(DISCONNECT);
+                        handler.sendMessage(handler.obtainMessage(DISCONNECT, connect_status.DISCONNECT));
                         break;
                     case LOGINING:
                         handler.sendEmptyMessage(LOGINING);
