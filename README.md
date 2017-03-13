@@ -34,6 +34,6 @@ liveSDK1.0demo和liveSDK1.0不再进行功能更新，只维护bug。
 
 ***
 #### 更多关于liveSDK2.0demo和liveSDK2.0的详细介绍请看[Wiki](https://github.com/easefun/polyv-android-live-sdk-2.0-demo/wiki)。
-2.0.1版API文档请看[v2.0.1 API](http://demo.polyv.net/polyv/android/live/sdk/2.0.1/api/index.html)。
-2.0.2版API文档请看[v2.0.2 API](http://demo.polyv.net/polyv/android/live/sdk/2.0.2/api/index.html)。
+2.0.1版API文档请看[v2.0.1 API](http://demo.polyv.net/polyv/android/live/sdk/2.0.1/api/index.html)。<br>
+2.0.2版API文档请看[v2.0.2 API](http://demo.polyv.net/polyv/android/live/sdk/2.0.2/api/index.html)。<br>
 2.0.3版API文档请看[v2.0.3 API](http://demo.polyv.net/polyv/android/live/sdk/2.0.3/api/index.html)。
