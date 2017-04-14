@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.easefun.polyvsdk.live.video.PolyvLiveVideoViewListener;
 import com.easefun.polyvsdk.live.R;
 
 /**
@@ -41,7 +42,7 @@ public class PolyvPlayerVolumeView extends FrameLayout {
     /**
      * 设置view显示的音量值
      * @param volume 音量值
-     * @param end {@link com.easefun.polyvsdk.live.video.PolyvLiveVideoViewListener.OnGestureRightDownListener}的回调方法参数
+     * @param end {@link PolyvLiveVideoViewListener.OnGestureRightDownListener}的回调方法参数
      */
     public void setViewVolumeValue(int volume, boolean end) {
         if (end)

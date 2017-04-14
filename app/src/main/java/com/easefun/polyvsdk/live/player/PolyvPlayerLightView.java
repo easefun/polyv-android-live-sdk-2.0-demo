@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.easefun.polyvsdk.live.video.PolyvLiveVideoViewListener;
 import com.easefun.polyvsdk.live.R;
 
 /**
@@ -41,7 +42,7 @@ public class PolyvPlayerLightView extends FrameLayout {
     /**
      * 设置view显示的亮度值
      * @param brightness 亮度值
-     * @param end {@link com.easefun.polyvsdk.live.video.PolyvLiveVideoViewListener.OnGestureLeftDownListener}的回调方法参数
+     * @param end {@link PolyvLiveVideoViewListener.OnGestureLeftDownListener}的回调方法参数
      */
     public void setViewLightValue(int brightness, boolean end) {
         if (end)

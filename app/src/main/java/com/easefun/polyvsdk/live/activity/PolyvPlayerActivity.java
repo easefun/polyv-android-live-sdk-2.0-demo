@@ -26,6 +26,7 @@ import com.easefun.polyvsdk.live.player.PolyvPlayerMediaController;
 import com.easefun.polyvsdk.live.player.PolyvPlayerVolumeView;
 import com.easefun.polyvsdk.live.util.AdmasterSdkUtils;
 import com.easefun.polyvsdk.live.util.PolyvScreenUtils;
+import com.easefun.polyvsdk.live.video.PolyvLiveMediaInfoType;
 import com.easefun.polyvsdk.live.video.PolyvLivePlayErrorReason;
 import com.easefun.polyvsdk.live.video.PolyvLiveVideoView;
 import com.easefun.polyvsdk.live.video.PolyvLiveVideoViewListener;
@@ -115,14 +116,22 @@ public class PolyvPlayerActivity extends FragmentActivity {
         videoView.setOnPreparedListener(new PolyvLiveVideoViewListener.OnPreparedListener() {
             @Override
             public void onPrepared() {
-
+                Toast.makeText(PolyvPlayerActivity.this, "准备完毕，可以播放", Toast.LENGTH_SHORT).show();
             }
         });
 
         videoView.setOnInfoListener(new PolyvLiveVideoViewListener.OnInfoListener() {
             @Override
             public void onInfo(int what, int extra) {
+                switch (what) {
+                    case PolyvLiveMediaInfoType.MEDIA_INFO_BUFFERING_START:
+                        Toast.makeText(PolyvPlayerActivity.this, "开始缓冲", Toast.LENGTH_SHORT).show();
+                        break;
 
+                    case PolyvLiveMediaInfoType.MEDIA_INFO_BUFFERING_END:
+                        Toast.makeText(PolyvPlayerActivity.this, "结束缓冲", Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }
         });
 
@@ -131,27 +140,35 @@ public class PolyvPlayerActivity extends FragmentActivity {
             public void onVideoPlayError(@NonNull PolyvLivePlayErrorReason errorReason) {
                 switch (errorReason.getType()) {
                     case NETWORK_DENIED:
-                        Toast.makeText(PolyvPlayerActivity.this, "无法连接网络，请连接网络后再试", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PolyvPlayerActivity.this, "无法连接网络，请连接网络后播放", Toast.LENGTH_SHORT).show();
                         break;
 
                     case START_ERROR:
-                        Toast.makeText(PolyvPlayerActivity.this, "视频开始播放错误，请重新播放", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PolyvPlayerActivity.this, "播放错误，请重新播放(error code " + PolyvLivePlayErrorReason.ErrorType.START_ERROR.getCode() + ")", Toast.LENGTH_SHORT).show();
                         break;
 
                     case CHANNEL_NULL:
-                        Toast.makeText(PolyvPlayerActivity.this, "频道信息为空", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PolyvPlayerActivity.this, "频道信息获取失败，请重新播放(error code " + PolyvLivePlayErrorReason.ErrorType.CHANNEL_NULL.getCode() + ")", Toast.LENGTH_SHORT).show();
                         break;
 
                     case LIVE_UID_NOT_EQUAL:
-                        Toast.makeText(PolyvPlayerActivity.this, "userId与服务器userId不匹配，请重新设置", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PolyvPlayerActivity.this, "用户id错误，请重新设置(error code" + PolyvLivePlayErrorReason.ErrorType.LIVE_UID_NOT_EQUAL.getCode() + ")", Toast.LENGTH_SHORT).show();
                         break;
 
                     case LIVE_CID_NOT_EQUAL:
-                        Toast.makeText(PolyvPlayerActivity.this, "channelId与服务器channelId不匹配，请重新设置", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PolyvPlayerActivity.this, "频道号错误，请重新设置(error code " + PolyvLivePlayErrorReason.ErrorType.LIVE_CID_NOT_EQUAL.getCode() + ")", Toast.LENGTH_SHORT).show();
                         break;
 
                     case LIVE_PLAY_ERROR:
-                        Toast.makeText(PolyvPlayerActivity.this, "播放错误，请稍后重试", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PolyvPlayerActivity.this, "播放错误，请稍后重试(error code " + PolyvLivePlayErrorReason.ErrorType.LIVE_PLAY_ERROR.getCode() + ")", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case RESTRICT_NULL:
+                        Toast.makeText(PolyvPlayerActivity.this, "限制信息错误，请稍后重试(error code " + PolyvLivePlayErrorReason.ErrorType.RESTRICT_NULL.getCode() + ")", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case RESTRICT_ERROR:
+                        Toast.makeText(PolyvPlayerActivity.this, errorReason.getErrorMsg() + "(error code " + PolyvLivePlayErrorReason.ErrorType.RESTRICT_ERROR.getCode() + ")", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }

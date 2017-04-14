@@ -177,7 +177,7 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
         this.userId = userId;
         this.roomId = roomId;
         this.nickName = nickName;
-        this.chatManager = PolyvChatManager.getInstance();
+        this.chatManager = new PolyvChatManager();
         this.chatManager.setOnChatManagerListener(new PolyvChatManager.ChatManagerListener() {
 
             @Override

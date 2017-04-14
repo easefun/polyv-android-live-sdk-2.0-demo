@@ -5,7 +5,23 @@ polyv-android-live-sdk-2.0-demo
 liveSDK2.0是Polyv为开发者用户提供的直播观看SDK ，是jar文件。易于集成，内部包含`直播播放` `聊天室`功能。首先需要在[Polyv官网](http://www.polyv.net)注册账户并开通直播功能，然后集成LiveSDK2.0到你的项目中。
 #### _polyv-android-live-sdk-2.0-demo_（以下简称**liveSDK2.0demo**）是什么？
 liveSDK2.0demo是liveSDK2.0的demo示例Android studio项目工程，其中包含了最新liveSDK2.0并且演示了如何在项目中集成liveSDK2.0。
-
+***
+#### 运行环境
+* JDK 1.7 或以上
+* Android SDK 14 或以上
+* Android Studio 2.2.0 或以上
+***
+#### 支持功能
+* 普通功能（播放，暂停，停止，全屏）
+* 广告
+* 秒播(图片广告，视频广告播放过程中提前加载直播)
+* 聊天室
+* 手势滑动（左向上，左向下，右向上，右向下，往左滑，往右滑）
+* 获取播放时长
+* 获取停留时长
+* 开启关闭声音
+* 声音调节
+* 亮度调节
 ***
 ### 如果未接触过_polyv-android-live-sdk-demo(1.0)_（以下简称**liveSDK1.0demo**）和_polyv-android-live-sdk(1.0)_（以下简称**liveSDK1.0**）可以跳过liveSDK1.0相关部分。
 
@@ -37,3 +53,4 @@ liveSDK1.0demo和liveSDK1.0不再进行功能更新，只维护bug。
 2.0.1版API文档请看[v2.0.1 API](http://demo.polyv.net/polyv/android/live/sdk/2.0.1/api/index.html)。<br>
 2.0.2版API文档请看[v2.0.2 API](http://demo.polyv.net/polyv/android/live/sdk/2.0.2/api/index.html)。<br>
 2.0.3版API文档请看[v2.0.3 API](http://demo.polyv.net/polyv/android/live/sdk/2.0.3/api/index.html)。
+2.0.4版API文档请看[v2.0.4 API](http://demo.polyv.net/polyv/android/live/sdk/2.0.4/api/index.html)。
