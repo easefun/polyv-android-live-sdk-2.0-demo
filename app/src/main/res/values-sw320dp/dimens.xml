@@ -1,5 +1,9 @@
 <resources>
 
+    <dimen name="top_center_ppt_player_height">63.7dp</dimen>
+    <dimen name="top_center_ppt_player_width">113.1dp</dimen>
+    <dimen name="top_center_ppt_player_height_land">71.7dp</dimen>
+    <dimen name="top_center_ppt_player_width_land">127.4dp</dimen>
     <dimen name="top_center_player_height">181.3dp</dimen>
     <dimen name="bottom_layout_height">38.5dp</dimen>
     <dimen name="iv_margin_top_l">109.6dp</dimen>

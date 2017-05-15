@@ -3,6 +3,7 @@ package com.easefun.polyvsdk.live.activity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.easefun.polyvsdk.live.R;
+import com.easefun.polyvsdk.live.chat.ppt.api.PolyvLiveMessage;
+import com.easefun.polyvsdk.live.chat.ppt.api.entity.PolyvLiveMessageEntity;
+import com.easefun.polyvsdk.live.chat.ppt.api.listener.PolyvLiveMessageListener;
 import com.easefun.polyvsdk.live.permission.PolyvPermission;
 
 /**
@@ -23,6 +27,7 @@ import com.easefun.polyvsdk.live.permission.PolyvPermission;
 public class PolyvLoginActivity extends Activity {
 	private EditText et_userid, et_channelid;
 	private TextView tv_login;
+    private ProgressDialog progress;
 	private PolyvPermission polyvPermission = null;
 	private static final int SETTING = 1;
 
@@ -49,6 +54,10 @@ public class PolyvLoginActivity extends Activity {
 	}
 
 	private void initView() {
+        progress = new ProgressDialog(this);
+        progress.setMessage("正在登录中，请稍等...");
+        progress.setCanceledOnTouchOutside(false);
+
 		et_userid.requestFocus();
 //		et_userid.setText("");
 //		et_channelid.setText("");
@@ -74,10 +83,34 @@ public class PolyvLoginActivity extends Activity {
 	}
 
 	private void gotoPlay() {
-		Intent playUrl = new Intent(PolyvLoginActivity.this, PolyvPlayerActivity.class);
-		playUrl.putExtra("uid", et_userid.getText().toString());
-		playUrl.putExtra("cid", et_channelid.getText().toString());
-		startActivity(playUrl);
+        progress.show();
+        final String channelId = et_channelid.getText().toString();
+        new PolyvLiveMessage().getLiveType(channelId, new PolyvLiveMessageListener() {
+            @Override
+            public void success(boolean isPPTLive, PolyvLiveMessageEntity entity) {
+                if (!progress.isShowing())
+                    return;
+                progress.dismiss();
+                Intent playUrl = isPPTLive ? new Intent(PolyvLoginActivity.this, PolyvPPTPlayerActivity.class)
+                        : new Intent(PolyvLoginActivity.this, PolyvPlayerActivity.class);
+                playUrl.putExtra("uid", et_userid.getText().toString());
+                playUrl.putExtra("cid", channelId);
+                startActivity(playUrl);
+            }
+
+            @Override
+            public void fail(final String failTips, final int code) {
+                if (!progress.isShowing())
+                    return;
+                progress.dismiss();
+                PolyvLoginActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(PolyvLoginActivity.this, "获取直播信息失败\n" + failTips + "-" + code, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
 	}
 
 	/**

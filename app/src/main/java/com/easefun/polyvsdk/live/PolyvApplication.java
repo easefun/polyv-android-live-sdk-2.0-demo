@@ -8,7 +8,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class PolyvApplication extends Application {
     /**
-     * 登录聊天室所需，请填写自己的appId和appSecret，否则无法登陆
+     * 登录聊天室/ppt直播所需，请填写自己的appId和appSecret，否则无法登陆
      * appId和appSecret在直播系统管理后台的用户信息页的API设置中用获取
      */
     private static final String appId = "";

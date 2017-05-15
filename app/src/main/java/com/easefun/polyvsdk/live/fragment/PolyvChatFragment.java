@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -96,6 +97,12 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
     private int rows = 3;
     // 页
     private int pages = 5;
+    // 是否是ppt直播，ppt直播无需操作聊天室实例
+    private boolean isPPTLive;
+
+    public void setIsPPTLive(boolean isPPTLive){
+        this.isPPTLive = isPPTLive;
+    }
 
     private Handler handler = new Handler() {
         @Override
@@ -167,17 +174,15 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
     };
 
     /**
-     * 初始化聊天室配置
+     * ppt直播初始化聊天室配置信息
      *
-     * @param userId   用户id
-     * @param roomId   房间id
-     * @param nickName 昵称
+     * @param chatManager
      */
-    public void initChatConfig(String userId, String roomId, String nickName) {
+    public void initPPTLiveChatConfig(@NonNull PolyvChatManager chatManager, String userId, String roomId, String nickName) {
         this.userId = userId;
         this.roomId = roomId;
         this.nickName = nickName;
-        this.chatManager = new PolyvChatManager();
+        this.chatManager = chatManager;
         this.chatManager.setOnChatManagerListener(new PolyvChatManager.ChatManagerListener() {
 
             @Override
@@ -209,6 +214,17 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                 handler.sendMessage(message);
             }
         });
+    }
+
+    /**
+     * 非ppt直播，初始化聊天室配置
+     *
+     * @param userId   用户id
+     * @param roomId   房间id
+     * @param nickName 昵称
+     */
+    public void initChatConfig(String userId, String roomId, String nickName) {
+        initPPTLiveChatConfig(new PolyvChatManager(), userId, roomId, nickName);
     }
 
     @Override
@@ -335,9 +351,11 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
 
     @SuppressWarnings("deprecation")
     private void initView() {
-        //登录聊天室
-        chatManager.login(userId, roomId, nickName);
+        // 登录聊天室
+        if (!isPPTLive)
+            chatManager.login(userId, roomId, nickName);
         polyvChatAdapter = new PolyvChatAdapter(getContext(), messages, lv_chat);
+        polyvChatAdapter.setChatManager(chatManager);
         polyvChatAdapter.setDanmuFragment(danmuFragment);
         polyvChatAdapter.setOnItemClickListener(new OnItemClickListener() {
 
@@ -488,9 +506,11 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //关闭聊天室
-        chatManager.disconnect();
-        chatManager.setOnChatManagerListener(null);
+        if (!isPPTLive) {
+            // 关闭聊天室
+            chatManager.disconnect();
+            chatManager.setOnChatManagerListener(null);
+        }
     }
 
     @Override

@@ -33,6 +33,7 @@ public class PolyvChatAdapter extends BaseAdapter implements OnClickListener {
     private ListView lv_chat;
     private DisplayImageOptions options;
     private PolyvDanmuFragment danmuFragment;
+    private PolyvChatManager chatManager;
     private PolyvTextImageLoader textImageLoader;
 
     public PolyvChatAdapter(Context context, List<PolyvChatMessage> messages, ListView lv_chat) {
@@ -54,6 +55,10 @@ public class PolyvChatAdapter extends BaseAdapter implements OnClickListener {
 
     public void setDanmuFragment(PolyvDanmuFragment danmuFragment) {
         this.danmuFragment = danmuFragment;
+    }
+
+    public void setChatManager(PolyvChatManager chatManager) {
+        this.chatManager = chatManager;
     }
 
     public void add(PolyvChatMessage message) {
@@ -148,7 +153,7 @@ public class PolyvChatAdapter extends BaseAdapter implements OnClickListener {
                     @Override
                     public void onClick(View v) {
                         iv_resend.setVisibility(View.GONE);
-                        if (PolyvChatManager.getInstance().sendChatMsg(message)) {
+                        if (chatManager.sendChatMsg(message)) {
                             danmuFragment.sendDanmaku(message.getValues()[0]);
                             updateStatusView(true, true, position);
                         } else {

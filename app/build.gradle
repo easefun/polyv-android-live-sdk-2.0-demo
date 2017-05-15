@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 4
-        versionName "2.0.4"
+        versionCode 5
+        versionName "2.0.5"
     }
     buildTypes {
         release {
@@ -24,13 +24,19 @@ dependencies {
     compile 'com.android.support:support-annotations:23+'
     compile 'com.android.support:support-v4:23+'
     compile 'com.android.support:appcompat-v7:23+'
+    //聊天室，PPT直播
     compile('io.socket:socket.io-client:0.8.3') {
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
     }
 
     compile project(':polyvAndroidSDKGif1.0')
+    //视频播放库，SDK中使用
     compile 'tv.danmaku.ijk.media:ijkplayer-java:0.7.7.1'
+    //视频播放库，SDK中使用
     compile 'tv.danmaku.ijk.media:ijkplayer-exo:0.7.7.1'
+    //弹幕库
     compile 'com.github.ctiao:DanmakuFlameMaster:0.6.2'
+    //图片下载库，SDK中使用
+    compile 'jp.wasabeef:glide-transformations:2.0.1'
 }
