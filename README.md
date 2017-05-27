@@ -12,11 +12,19 @@ liveSDK2.0demo是liveSDK2.0的demo示例Android studio项目工程，其中包�
 * Android Studio 2.2.0 或以上
 ***
 #### 支持功能
-* 普通功能（播放，暂停）
+* 普通功能
+  * 播放
+  * 暂停
 * 全屏
 * 广告
 * 秒播(图片广告，视频广告播放过程中提前加载直播)
-* 手势滑动（左向上，左向下，右向上，右向下，往左滑，往右滑）
+* 手势滑动
+  * 左向上
+  * 左向下
+  * 右向上
+  * 右向下
+  * 往左滑
+  * 往右滑
 * 获取播放时长
 * 获取停留时长
 * 开启关闭声音
@@ -44,7 +52,7 @@ liveSDK2.0是liveSDK1.0的升级版，在liveSDK1.0的基础上，进行升级�
 集成门槛和开发难度大大降低。
 liveSDK1.0demo和liveSDK1.0不再进行功能更新，只维护bug。
 #### 集成liveSDK2.0较liveSDK1.0最大的改变是什么？
-* 第一点是由于点播逻辑和直播逻辑完全分离开，但又要兼容可以同时在项目中集成点播SDK和直播观看SDK，所以直播观看SDK的类名全部有变化，但是遵从一个原则，在liveSDK1.0类名前增加了PolyvLive的前缀。
+* 第一点是由于直播观看逻辑和点播逻辑完全分离开，但又要兼容可以同时在项目中集成直播观看SDK和点播SDK，所以直播观看SDK的类名全部有变化，但是遵从一个原则，在liveSDK1.0类名前增加了PolyvLive的前缀。
 * 第二点是所有监听事件统一由PolyvLiveVideoViewListener类定义。
 * 第三点是广告视频和直播视频使用不同的播放器进行播放，从而为实现视频预加载提供可能，因此增加了PolyvLiveAuxiliaryVideoView，用于播放广告视频。逻辑已全部由播放器控制。
 
@@ -56,4 +64,5 @@ liveSDK1.0demo和liveSDK1.0不再进行功能更新，只维护bug。
 2.0.2版API文档请看[v2.0.2 API](http://demo.polyv.net/polyv/android/live/sdk/2.0.2/api/index.html)。<br>
 2.0.3版API文档请看[v2.0.3 API](http://demo.polyv.net/polyv/android/live/sdk/2.0.3/api/index.html)。<br>
 2.0.4版API文档请看[v2.0.4 API](http://demo.polyv.net/polyv/android/live/sdk/2.0.4/api/index.html)。<br>
-2.0.5版API文档请看[v2.0.5 API](http://demo.polyv.net/polyv/android/live/sdk/2.0.5/api/index.html)。
+2.0.5版API文档请看[v2.0.5 API](http://demo.polyv.net/polyv/android/live/sdk/2.0.5/api/index.html)。<br>
+2.0.6版API文档请看[v2.0.6 API](http://demo.polyv.net/polyv/android/live/sdk/2.0.6/api/index.html)。

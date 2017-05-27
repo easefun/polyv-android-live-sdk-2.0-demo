@@ -310,6 +310,13 @@ public class PolyvPlayerActivity extends FragmentActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        lightView.hide();
+        volumeView.hide();
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         //弹出去暂停

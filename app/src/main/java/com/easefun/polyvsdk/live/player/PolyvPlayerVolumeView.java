@@ -39,6 +39,11 @@ public class PolyvPlayerVolumeView extends FrameLayout {
         tv_volume = (TextView) view.findViewById(R.id.tv_volume);
     }
 
+    public void hide() {
+        if (rl_center_volume != null)
+            rl_center_volume.setVisibility(View.GONE);
+    }
+
     /**
      * 设置view显示的音量值
      * @param volume 音量值

@@ -39,6 +39,11 @@ public class PolyvPlayerLightView extends FrameLayout {
         tv_light = (TextView) view.findViewById(R.id.tv_light);
     }
 
+    public void hide() {
+        if (rl_center_light != null)
+            rl_center_light.setVisibility(View.GONE);
+    }
+
     /**
      * 设置view显示的亮度值
      * @param brightness 亮度值

@@ -52,8 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
-            android:visibility="gone" />
+            android:layout_centerInParent="true" />
 
         <com.easefun.polyvsdk.live.player.PolyvPlayerAuxiliaryView
             android:id="@+id/polyv_player_auxiliary_view"
@@ -79,11 +78,13 @@
         android:layout_height="match_parent"
         android:layout_below="@id/view_layout" />
 
+    <!--visibility=invisible：设置初始的时候不显示(不能使用visibility=gone,这样会导致播放器无法测量宽高)，等待广播播放完成的时候/开始播放会显示-->
     <RelativeLayout
         android:id="@+id/rl_container"
         android:layout_width="@dimen/top_center_ppt_player_width"
         android:layout_height="@dimen/top_center_ppt_player_height"
-        android:background="@color/top_text_color_black">
+        android:background="@color/top_text_color_black"
+        android:visibility="invisible">
 
         <!-- ppt直播播放器，其父控件的父控件需是RelativeLayout/LinearLayout/FrameLayout或其子类，另外不要嵌套在可以滚动的布局里 -->
         <com.easefun.polyvsdk.live.video.PolyvLiveVideoView

@@ -111,7 +111,7 @@ public class PolyvPPTPlayerActivity extends FragmentActivity {
         polyvChatFragment = new PolyvChatFragment();
         polyvChatFragment.setIsPPTLive(true);
         chatManager = new PolyvChatManager();
-        // 该方法并不会立即登录，只是初始化登录的信息，登录操作将交给ppt控件初始化完成后处理
+        // 该方法并不会立即登录，只是初始化登录的信息，登录操作将交给ppt控件的setFirstLive方法执行
         chatManager.pptLogin(uid, cid, "游客");
         polyvChatFragment.initPPTLiveChatConfig(chatManager, uid, cid, "游客");
         danmuFragment = new PolyvDanmuFragment();
@@ -168,8 +168,10 @@ public class PolyvPPTPlayerActivity extends FragmentActivity {
                 });
             }
         });
+        // 初始化pptview的配置
+        ppt_view.initParams(chatManager, videoView);
         // 开始第一场ppt直播pptView对应调用该方法，当需要在当前播放界面切换到下一场ppt直播，需调用(setNextLive()方法和videoView.setPPTLivePlay()，无需操作聊天室实例)
-        ppt_view.setFirstLive(chatManager, videoView);
+        ppt_view.setFirstLive();
         // 初始化播放器的位置
         rl_container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -217,7 +219,7 @@ public class PolyvPPTPlayerActivity extends FragmentActivity {
 
     private void initView() {
         videoView.setOpenAd(true);
-        //注：ppt直播暂时不能设置预加载功能，否则ppt布局会有问题，下个版本会修复
+        videoView.setOpenPreload(true, 2);
         videoView.setNeedGestureDetector(true);
 
         videoView.setOnPreparedListener(new PolyvLiveVideoViewListener.OnPreparedListener() {
@@ -417,8 +419,17 @@ public class PolyvPPTPlayerActivity extends FragmentActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        ppt_view.notiActivityPause();
+        lightView.hide();
+        volumeView.hide();
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
+        ppt_view.notiActivityStop();
         //弹出去暂停
         isPlay = videoView.onActivityStop();
     }

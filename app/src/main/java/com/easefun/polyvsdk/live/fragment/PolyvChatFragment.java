@@ -352,7 +352,7 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
     @SuppressWarnings("deprecation")
     private void initView() {
         // 登录聊天室
-        if (!isPPTLive)
+        if (!isPPTLive && chatManager != null)
             chatManager.login(userId, roomId, nickName);
         polyvChatAdapter = new PolyvChatAdapter(getContext(), messages, lv_chat);
         polyvChatAdapter.setChatManager(chatManager);
@@ -506,7 +506,7 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (!isPPTLive) {
+        if (!isPPTLive && chatManager != null) {
             // 关闭聊天室
             chatManager.disconnect();
             chatManager.setOnChatManagerListener(null);
