@@ -53,7 +53,7 @@ liveSDK2.0是liveSDK1.0的升级版，在liveSDK1.0的基础上，进行升级�
 liveSDK1.0demo和liveSDK1.0不再进行功能更新，只维护bug。
 #### 集成liveSDK2.0较liveSDK1.0最大的改变是什么？
 * 第一点是由于直播观看逻辑和点播逻辑完全分离开，但又要兼容可以同时在项目中集成直播观看SDK和点播SDK，所以直播观看SDK的类名全部有变化，但是遵从一个原则，在liveSDK1.0类名前增加了PolyvLive的前缀。
-* 第二点是所有监听事件统一由PolyvLiveVideoViewListener类定义。
+* 第二点是所有监听回调统一由PolyvLiveVideoViewListener类定义，并且都在主线程中回调。
 * 第三点是广告视频和直播视频使用不同的播放器进行播放，从而为实现视频预加载提供可能，因此增加了PolyvLiveAuxiliaryVideoView，用于播放广告视频。逻辑已全部由播放器控制。
 
 更多细节请在liveSDK2.0demo中查看。
