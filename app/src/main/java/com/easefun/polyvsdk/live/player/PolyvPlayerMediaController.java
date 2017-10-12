@@ -34,6 +34,7 @@ public class PolyvPlayerMediaController extends PolyvLiveMediaController impleme
     //控制栏显示的时间
     private static final int longTime = 5000;
     private static final int HIDE = 12;
+    private static final int UPDATE_PLAY_BUTTON = 13;
 
     private Handler handler = new Handler() {
         @Override
@@ -42,9 +43,23 @@ public class PolyvPlayerMediaController extends PolyvLiveMediaController impleme
                 case HIDE:
                     hide();
                     break;
+                case UPDATE_PLAY_BUTTON:
+                    updatePlayButton();
+                    break;
             }
         }
     };
+
+    private void updatePlayButton(){
+        if (isShowing && videoView != null) {
+            if (videoView.isPlaying()) {
+                iv_play.setSelected(false);
+            } else {
+                iv_play.setSelected(true);
+            }
+            handler.sendMessageDelayed(handler.obtainMessage(UPDATE_PLAY_BUTTON), 1000);
+        }
+    }
 
     public PolyvPlayerMediaController(Context context) {
         this(context, null);
@@ -105,6 +120,7 @@ public class PolyvPlayerMediaController extends PolyvLiveMediaController impleme
         //这里的LayoutParams为parentView的父类的LayoutParams
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(wh[0], wh[1]);
         parentView.setLayoutParams(lp);
+        iv_land.setSelected(true);
     }
 
     /**
@@ -120,7 +136,6 @@ public class PolyvPlayerMediaController extends PolyvLiveMediaController impleme
         PolyvScreenUtils.reSetStatusBar(videoActivity);
         if (PolyvScreenUtils.isLandscape(mContext)) {
             initLandScapeWH();
-            iv_land.setSelected(true);
         } else {
             //这里宽高设置是polyv_fragment_player.xml布局文件中parentView的初始值
             RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, (int) mContext.getResources().getDimension(R.dimen.top_center_player_height));
@@ -171,6 +186,8 @@ public class PolyvPlayerMediaController extends PolyvLiveMediaController impleme
     @Override
     public void show(int timeout) {
         if (!isShowing) {
+            handler.removeMessages(UPDATE_PLAY_BUTTON);
+            handler.sendEmptyMessage(UPDATE_PLAY_BUTTON);
             isShowing = !isShowing;
             setVisibility(View.VISIBLE);
         }
@@ -185,6 +202,7 @@ public class PolyvPlayerMediaController extends PolyvLiveMediaController impleme
 
     //根据视频的播放状态去暂停或播放
     private void playOrPause() {
+        handler.removeMessages(UPDATE_PLAY_BUTTON);
         if (videoView != null) {
             if (videoView.isPlaying()) {
                 videoView.pause();
