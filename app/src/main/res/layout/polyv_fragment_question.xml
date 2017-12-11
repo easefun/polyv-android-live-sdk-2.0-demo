@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/top_sline_color_gray">
+    <LinearLayout
+        android:id="@+id/fl_bot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/commom_click_color_gray"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ll_height"
+            android:background="@color/top_layout_color_white"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/iv_emoswitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/iv_marginleft"
+                android:layout_marginRight="@dimen/iv_marginright"
+                android:src="@drawable/polyv_iv_emo_pressed" />
+
+            <ImageView
+                android:id="@+id/iv_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/iv_marginleft_l"
+                android:layout_marginRight="@dimen/iv_marginright_l"
+                android:background="@drawable/polyv_iv_send_pressed" />
+
+            <pl.droidsonroids.gif.GifEditText
+                android:id="@+id/et_talk"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/et_height_s"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/iv_send"
+                android:layout_toRightOf="@id/iv_emoswitch"
+                android:background="@drawable/polyv_et_corners"
+                android:hint="我想问讲师..."
+                android:paddingLeft="@dimen/et_padding"
+                android:paddingRight="@dimen/et_padding"
+                android:singleLine="true"
+                android:textColor="@color/bottom_et_color_gray"
+                android:textColorHint="@color/bottom_et_color_gray"
+                android:textCursorDrawable="@drawable/polyv_et_cursor_color"
+                android:textSize="@dimen/tv_textsize" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_bot"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/vp_layout_height"
+            android:background="@color/top_layout_color_white"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/ll_bot"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/iv_wh"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/common_margin_tb"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_page1"
+                    style="@style/PageView" />
+
+                <ImageView
+                    android:id="@+id/iv_page2"
+                    style="@style/PageView" />
+
+                <ImageView
+                    android:id="@+id/iv_page3"
+                    style="@style/PageView" />
+
+                <ImageView
+                    android:id="@+id/iv_page4"
+                    style="@style/PageView" />
+
+                <ImageView
+                    android:id="@+id/iv_page5"
+                    style="@style/PageView" />
+            </LinearLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp_emo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/ll_bot" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/fl_bot">
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="space"
+            android:textColor="@color/top_right_text_color_black"
+            android:textSize="@dimen/center_right_text_size_l"
+            android:visibility="invisible" />
+
+        <ListView
+            android:id="@+id/lv_question"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/tv_status"
+            android:layout_below="@id/tv_loadmore"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@null"
+            android:fadingEdgeLength="0dp"
+            android:fastScrollEnabled="false"
+            android:listSelector="@android:color/transparent"
+            android:transcriptMode="normal"></ListView>
+    </RelativeLayout>
+</RelativeLayout>

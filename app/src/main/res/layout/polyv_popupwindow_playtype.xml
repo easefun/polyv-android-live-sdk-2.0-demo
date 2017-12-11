@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/commom_dialog_color_gray"
+              android:orientation="vertical">
+
+    <include
+        layout="@layout/polyv_popupwindow_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_auto"
+            style="@style/tv_click_popupwindow"
+            android:text="> 根据接口自动判断"/>
+
+        <TextView
+            android:id="@+id/tv_live"
+            style="@style/tv_click_popupwindow"
+            android:text="> 直播助手直播"/>
+
+        <TextView
+            android:id="@+id/tv_ppt_live"
+            style="@style/tv_click_popupwindow"
+            android:text="> 云课堂直播"/>
+
+        <TextView
+            android:id="@+id/tv_playbacklist"
+            style="@style/tv_click_popupwindow"
+            android:text="> 回放列表"/>
+    </LinearLayout>
+</LinearLayout>

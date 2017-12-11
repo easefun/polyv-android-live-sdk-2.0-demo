@@ -19,6 +19,8 @@ public class PolyvTimeUtils {
 
     private static SimpleDateFormat formatDateTime = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault());
 
+    private static SimpleDateFormat formatDateTime2 = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+
 
     /**
      * 格式化日期
@@ -39,6 +41,20 @@ public class PolyvTimeUtils {
     private static String formatDateTime(Date date) {
 
         return formatDateTime.format(date);
+    }
+
+    /**
+     * 格式化日期
+     *
+     * @return (年月日) 时分秒
+     */
+    private static String formatDateTime2(Date date) {
+        Calendar cal = Calendar.getInstance();
+
+        // 判断是否是同一天
+        String curDate = formatDate.format(cal.getTime());
+        String paramDate = formatDate.format(date);
+        return curDate.equals(paramDate) ? formatDateTime2.format(date) : formatDateTime.format(date);
     }
 
 
@@ -109,7 +125,7 @@ public class PolyvTimeUtils {
         if (time == null) {
             return "Unknown";
         }
-        return formatDateTime(time);
+        return formatDateTime2(time);
     }
 
     /**

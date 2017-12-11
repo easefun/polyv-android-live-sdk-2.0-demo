@@ -40,7 +40,7 @@ public class PolyvPlayerVolumeView extends FrameLayout {
     }
 
     public void hide() {
-        if (rl_center_volume != null)
+        if (rl_center_volume != null && rl_center_volume.getVisibility() == View.VISIBLE)
             rl_center_volume.setVisibility(View.GONE);
     }
 

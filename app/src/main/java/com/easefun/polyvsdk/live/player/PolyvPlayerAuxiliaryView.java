@@ -26,7 +26,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * 图片广告和图片片头视图，视频广告和视频片头在{@link com.easefun.polyvsdk.live.video.PolyvLiveVideoView}中已经处理
+ * 图片广告和图片片头视图和暖场图片，视频广告和视频片头在{@link com.easefun.polyvsdk.live.video.PolyvLiveVideoView}中已经处理
  * @author TanQu 2016-11-15
  */
 public class PolyvPlayerAuxiliaryView extends RelativeLayout {
@@ -36,6 +36,8 @@ public class PolyvPlayerAuxiliaryView extends RelativeLayout {
 	private ImageButton mStartBtn = null;
 	private DisplayImageOptions mOptions = null;
 	private PolyvLiveChannelVO.ADMatter mADMatter = null;
+	// 暖场图片的点击跳转链接
+	private String coverImageClickPath = null;
 
     public PolyvPlayerAuxiliaryView(Context context) {
         this(context, null);
@@ -62,20 +64,12 @@ public class PolyvPlayerAuxiliaryView extends RelativeLayout {
 			
 			@Override
 			public void onClick(View v) {
-				if (mADMatter == null) return;
-				// 发送广告点击监测
-				AdmasterSdkUtils.sendAdvertMonitor(mADMatter, AdmasterSdkUtils.MONITOR_CLICK);
-				String path = mADMatter.getAddrUrl();
-				if (!TextUtils.isEmpty(path)) {
-					try {
-						new URL(path);
-					} catch (MalformedURLException e) {
-						return;
-					}
-					
-					Intent intent = new Intent(Intent.ACTION_VIEW);
-					intent.setData(Uri.parse(path));
-					mContext.startActivity(intent);
+				if (mADMatter != null) {
+					// 发送广告点击监测
+					AdmasterSdkUtils.sendAdvertMonitor(mADMatter, AdmasterSdkUtils.MONITOR_CLICK);
+					intoClickPath(mADMatter.getAddrUrl());
+				} else if (coverImageClickPath != null) {
+					intoClickPath(coverImageClickPath);
 				}
 			}
 		});
@@ -102,23 +96,19 @@ public class PolyvPlayerAuxiliaryView extends RelativeLayout {
 		}
     }
 
-    /**
-     * 设置图片并显示
-     * @param adMatter
-     */
-    public void show(PolyvLiveChannelVO.ADMatter adMatter) {
-    	mADMatter = adMatter;
-		ImageLoader.getInstance().displayImage(mADMatter.getMatterUrl(), mAdvertisementImage, mOptions, new PolyvAnimateFirstDisplayListener());
+	private void intoClickPath(String clickPath) {
+		if (!TextUtils.isEmpty(clickPath)) {
+			try {
+				new URL(clickPath);
+			} catch (MalformedURLException e) {
+				return;
+			}
 
-    	//暂停图片广告不需要倒计时，是点击开始按钮继续
-    	if (PolyvLiveChannelVO.ADMatter.LOCATION_PAUSE.equals(adMatter.getLocation())) {
-    		mStartBtn.setVisibility(View.VISIBLE);
-    	} else {
-    		mStartBtn.setVisibility(View.GONE);
-    	}
-
-		setVisibility(View.VISIBLE);
-    }
+			Intent intent = new Intent(Intent.ACTION_VIEW);
+			intent.setData(Uri.parse(clickPath));
+			mContext.startActivity(intent);
+		}
+	}
 
 	/**
 	 * 设置图片并显示
@@ -126,8 +116,41 @@ public class PolyvPlayerAuxiliaryView extends RelativeLayout {
 	 */
 	public void show(String url) {
 		mADMatter = null;
+		coverImageClickPath = null;
 		ImageLoader.getInstance().displayImage(url, mAdvertisementImage, mOptions, new PolyvAnimateFirstDisplayListener());
 		mStartBtn.setVisibility(View.GONE);
+		setVisibility(View.VISIBLE);
+	}
+
+	/**
+	 * 设置图片并显示
+	 * @param url
+	 * @param clickPath
+	 */
+	public void show(String url, String clickPath) {
+		mADMatter = null;
+		coverImageClickPath = clickPath;
+		ImageLoader.getInstance().displayImage(url, mAdvertisementImage, mOptions, new PolyvAnimateFirstDisplayListener());
+		mStartBtn.setVisibility(View.GONE);
+		setVisibility(View.VISIBLE);
+	}
+
+	/**
+	 * 设置图片并显示
+	 * @param adMatter
+	 */
+	public void show(PolyvLiveChannelVO.ADMatter adMatter) {
+		mADMatter = adMatter;
+		coverImageClickPath = null;
+		ImageLoader.getInstance().displayImage(mADMatter.getMatterUrl(), mAdvertisementImage, mOptions, new PolyvAnimateFirstDisplayListener());
+
+		//暂停图片广告不需要倒计时，是点击开始按钮继续
+		if (PolyvLiveChannelVO.ADMatter.LOCATION_PAUSE.equals(adMatter.getLocation())) {
+			mStartBtn.setVisibility(View.VISIBLE);
+		} else {
+			mStartBtn.setVisibility(View.GONE);
+		}
+
 		setVisibility(View.VISIBLE);
 	}
 

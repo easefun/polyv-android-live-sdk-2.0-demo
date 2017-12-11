@@ -6,12 +6,13 @@ import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 
 import com.easefun.polyvsdk.live.video.PolyvLiveVideoView;
+import com.easefun.polyvsdk.video.PolyvVideoView;
 
 /**
  * ppt直播画板的父控件，用于传递手势事件给ppt播放器
  */
 public class PolyvGestureLayout extends RelativeLayout {
-    private PolyvLiveVideoView videoView;
+    private Object videoView;
 
     public PolyvGestureLayout(Context context) {
         super(context);
@@ -25,12 +26,17 @@ public class PolyvGestureLayout extends RelativeLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    public void setPolyvLiveVideoView(PolyvLiveVideoView videoView) {
+    public void setPolyvLiveVideoView(Object videoView) {
         this.videoView = videoView;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return videoView != null ? videoView.onPPTLiveTranTouchEvent(event, getMeasuredWidth()) : super.onTouchEvent(event);
+        if  (videoView instanceof PolyvLiveVideoView){
+            return ((PolyvLiveVideoView)videoView).onPPTLiveTranTouchEvent(event, getMeasuredWidth());
+        }else if(videoView instanceof PolyvVideoView){
+            return ((PolyvVideoView)videoView).onPPTLiveTranTouchEvent(event, getMeasuredWidth());
+        }
+        return super.onTouchEvent(event);
     }
 }

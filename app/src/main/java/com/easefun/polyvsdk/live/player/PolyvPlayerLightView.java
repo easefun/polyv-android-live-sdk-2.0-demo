@@ -40,7 +40,7 @@ public class PolyvPlayerLightView extends FrameLayout {
     }
 
     public void hide() {
-        if (rl_center_light != null)
+        if (rl_center_light != null && rl_center_light.getVisibility() == View.VISIBLE)
             rl_center_light.setVisibility(View.GONE);
     }
 

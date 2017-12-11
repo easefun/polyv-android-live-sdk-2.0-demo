@@ -24,7 +24,7 @@ public class PolyvTextImageLoader {
     }
 
     /**
-     * 显示带本地图片的图文混排
+     * 显示带本地表情图片的图文混排
      */
     public void displayTextImage(CharSequence charSequence, TextView textView) {
         float size = textView.getTextSize();
@@ -49,7 +49,7 @@ public class PolyvTextImageLoader {
                 drawable = context.getResources().getDrawable(PolyvFaceManager.getInstance().getFaceId(group));
                 imageSpan = new RelativeImageSpan(drawable, RelativeImageSpan.ALIGN_CENTER);
             }
-            drawable.setBounds(0, 0, reqWidth + 18, reqHeight + 18);
+            drawable.setBounds(0, 0, (int) (reqWidth * 1.6), (int) (reqHeight * 1.6));
             span.setSpan(imageSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
         textView.setText(span);

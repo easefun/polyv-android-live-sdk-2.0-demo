@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/tv_margintop_l"
         android:layout_marginRight="@dimen/tv_margintop_l"
-        android:layout_marginTop="@dimen/tv_margintop_l"
+        android:layout_marginTop="@dimen/tv_margintop_l_l"
+        android:gravity="center"
         android:text="totice"
         android:textColor="@color/top_left_layout_color_black_alpha"
         android:textSize="@dimen/tv_textsize" />

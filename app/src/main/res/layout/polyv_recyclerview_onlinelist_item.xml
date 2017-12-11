@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/rl_height"
+    android:paddingLeft="@dimen/rl_paddingleft"
+    android:paddingRight="@dimen/rl_paddingright">
+
+    <ImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="@dimen/iv_wh"
+        android:layout_height="@dimen/iv_wh"
+        android:layout_centerVertical="true"
+        android:src="@drawable/polyv_avatar_def" />
+
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/et_marginright"
+        android:layout_toRightOf="@id/iv_avatar"
+        android:ellipsize="end"
+        android:maxWidth="@dimen/top_center_ppt_player_width_land"
+        android:singleLine="true"
+        android:text="助教"
+        android:textColor="@color/top_left_layout_color_black"
+        android:textSize="@dimen/tv_textsize_l" />
+
+    <TextView
+        android:id="@+id/tv_usertype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/et_marginright"
+        android:layout_toRightOf="@id/tv_nickname"
+        android:background="@drawable/polyv_tv_corners_white"
+        android:gravity="center"
+        android:paddingBottom="1dp"
+        android:paddingLeft="@dimen/rl_paddingright"
+        android:paddingRight="@dimen/rl_paddingright"
+        android:paddingTop="1dp"
+        android:text="讲师"
+        android:textColor="@color/top_et_color_gray"
+        android:textSize="@dimen/tv_textsize_s" />
+
+    <ImageView
+        android:id="@+id/iv_mictype"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_speak_status"
+        android:layout_alignTop="@+id/tv_speak_status"
+        android:layout_marginRight="@dimen/et_padding"
+        android:layout_toLeftOf="@+id/tv_speak_status"
+        android:src="@drawable/polyv_iv_mic_status_select" />
+
+    <TextView
+        android:id="@+id/tv_speak_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="发言中"
+        android:textColor="@color/top_left_layout_color_black"
+        android:textSize="@dimen/tv_textsize_l" />
+</RelativeLayout>
