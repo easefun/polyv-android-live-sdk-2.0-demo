@@ -46,8 +46,12 @@ public class PolyvTextImageLoader {
                 drawable = new GifDrawable(context.getResources(), PolyvFaceManager.getInstance().getFaceId(group));
                 imageSpan = new GifImageSpan(drawable, RelativeImageSpan.ALIGN_CENTER);
             } catch (NotFoundException | IOException e) {
-                drawable = context.getResources().getDrawable(PolyvFaceManager.getInstance().getFaceId(group));
-                imageSpan = new RelativeImageSpan(drawable, RelativeImageSpan.ALIGN_CENTER);
+                try {
+                    drawable = context.getResources().getDrawable(PolyvFaceManager.getInstance().getFaceId(group));
+                    imageSpan = new RelativeImageSpan(drawable, RelativeImageSpan.ALIGN_CENTER);
+                } catch (Exception e1) {
+                    continue;
+                }
             }
             drawable.setBounds(0, 0, (int) (reqWidth * 1.6), (int) (reqHeight * 1.6));
             span.setSpan(imageSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

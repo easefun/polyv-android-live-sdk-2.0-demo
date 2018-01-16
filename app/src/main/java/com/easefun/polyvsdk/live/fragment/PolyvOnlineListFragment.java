@@ -290,12 +290,12 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
 
                     @Override
                     public void onDenied(String[] permissions) {
-                        showDialog("提示", "通话所需的%s权限被拒绝，请到应用设置的权限管理中恢复", true, permissions);
+                        showDialog("提示", "需要允许%s权限才能进行通话，是否再次请求", false, permissions);
                     }
 
                     @Override
                     public void onShowRationale(String[] permissions) {
-                        showDialog("提示", "需要允许%s权限才能进行通话，是否再次请求", false, permissions);
+                        showDialog("提示", "通话所需的%s权限被拒绝，请到应用设置的权限管理中恢复", true, permissions);
                     }
                 });
     }

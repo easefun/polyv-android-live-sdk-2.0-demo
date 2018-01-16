@@ -2,7 +2,7 @@
 polyv-android-live-sdk-2.0-demo
 ===
 [![build passing](https://img.shields.io/badge/build-passing-brightgreen.svg)](#)
-[![release v2.0.8](https://img.shields.io/badge/release-v2.0.8-blue.svg)](https://github.com/easefun/polyv-android-live-sdk-2.0-demo/releases/tag/v2.0.8)
+[![GitHub release](https://img.shields.io/badge/release-v2.2.1-blue.svg)](https://github.com/easefun/polyv-android-live-sdk-2.0-demo/releases/tag/v2.2.1)
 #### _polyv-android-live-sdk-2.0_（以下简称**liveSDK2.0**）是什么？
 liveSDK2.0是Polyv为开发者用户提供的直播观看SDK ，是jar文件。易于集成，内部包含`直播播放` `聊天室`功能。首先需要在[Polyv官网](http://www.polyv.net)注册账户并开通直播功能，然后集成LiveSDK2.0到你的项目中。
 #### _polyv-android-live-sdk-2.0-demo_（以下简称**liveSDK2.0demo**）是什么？
@@ -62,11 +62,12 @@ liveSDK1.0demo和liveSDK1.0不再进行功能更新，只维护bug。
 
 ***
 #### 更多关于liveSDK2.0demo和liveSDK2.0的详细介绍请看[Wiki](https://github.com/easefun/polyv-android-live-sdk-2.0-demo/wiki)。
-2.0.1版API文档请看[v2.0.1 API](http://repo.polyv.net/android/live/sdk/2.0.1/api/index.html)。<br>
-2.0.2版API文档请看[v2.0.2 API](http://repo.polyv.net/android/live/sdk/2.0.2/api/index.html)。<br>
-2.0.3版API文档请看[v2.0.3 API](http://repo.polyv.net/android/live/sdk/2.0.3/api/index.html)。<br>
-2.0.4版API文档请看[v2.0.4 API](http://repo.polyv.net/android/live/sdk/2.0.4/api/index.html)。<br>
-2.0.5版API文档请看[v2.0.5 API](http://repo.polyv.net/android/live/sdk/2.0.5/api/index.html)。<br>
-2.0.6版API文档请看[v2.0.6 API](http://repo.polyv.net/android/live/sdk/2.0.6/api/index.html)。<br>
-2.0.7版API文档请看[v2.0.7 API](http://repo.polyv.net/android/live/sdk/2.0.7/api/index.html)。<br>
-2.0.8版API文档请看[v2.0.8 API](http://repo.polyv.net/android/live/sdk/2.0.8/api/index.html)。
+2.0.1版API文档请看[v2.0.1 API](http://repo.polyv.net/android/live/sdk/2.0.1/api/index.html)。<br/>
+2.0.2版API文档请看[v2.0.2 API](http://repo.polyv.net/android/live/sdk/2.0.2/api/index.html)。<br/>
+2.0.3版API文档请看[v2.0.3 API](http://repo.polyv.net/android/live/sdk/2.0.3/api/index.html)。<br/>
+2.0.4版API文档请看[v2.0.4 API](http://repo.polyv.net/android/live/sdk/2.0.4/api/index.html)。<br/>
+2.0.5版API文档请看[v2.0.5 API](http://repo.polyv.net/android/live/sdk/2.0.5/api/index.html)。<br/>
+2.0.6版API文档请看[v2.0.6 API](http://repo.polyv.net/android/live/sdk/2.0.6/api/index.html)。<br/>
+2.0.7版API文档请看[v2.0.7 API](http://repo.polyv.net/android/live/sdk/2.0.7/api/index.html)。<br/>
+2.0.8版API文档请看[v2.0.8 API](http://repo.polyv.net/android/live/sdk/2.0.8/api/index.html)。<br/>
+2.2.1版API文档请看[v2.2.1 API](http://repo.polyv.net/android/live/sdk/2.2.1/api/index.html)。
