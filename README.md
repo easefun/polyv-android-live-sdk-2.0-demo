@@ -17,6 +17,7 @@ liveSDK2.0demo是liveSDK2.0的demo示例Android studio项目工程，其中包�
 * 普通功能
   * 播放
   * 暂停
+* 跑马灯
 * 全屏
 * 广告
 * 秒播(图片广告，视频广告播放过程中提前加载直播)
