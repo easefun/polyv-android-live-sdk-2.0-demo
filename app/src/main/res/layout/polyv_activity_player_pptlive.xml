@@ -39,6 +39,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <View
+            android:id="@+id/v_pause_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000000"
+            android:visibility="gone"
+            android:alpha="0.2"/>
+
         <com.easefun.polyvsdk.live.player.PolyvPlayerMediaController
             android:id="@+id/polyv_player_media_controller"
             android:layout_width="match_parent"
@@ -88,7 +96,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/fl_tab"/>
 
-    <!--visibility=invisible：设置初始的时候不显示(不能使用visibility=gone,这样会导致播放器无法测量宽高)，等待广播播放完成的时候/开始播放会显示-->
+    <!--visibility=invisible：设置初始的时候不显示(不能使用visibility=gone,这样会导致播放器无法测量宽高)，等待广告播放完成的时候/开始播放会显示-->
     <RelativeLayout
         android:id="@+id/rl_container"
         android:layout_width="@dimen/top_center_ppt_player_width"

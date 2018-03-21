@@ -88,8 +88,12 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
     // 聊天信息列表集合
     private LinkedList<PolyvChatMessage> messages;
 
+    //listview是否滚到最后
+    private boolean isScrollEnd = true;
+    //已看聊天信息的最后一个item
+    private int lastPreviewItem = -1;
     // 聊天室状态
-    private TextView tv_status;
+    private TextView tv_status, tv_read;
     // 信息编辑控件
     private GifEditText et_talk;
     // 聊天管理类
@@ -137,6 +141,13 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                     boolean syncAdd = true;
                     if (chatMessage.getChatType() == PolyvChatMessage.CHATTYPE_RECEIVE) { // 发言信息
                         viewPagerFragment.getDanmuFragment().sendDanmaku(chatMessage.getValues()[0]);
+                        if (!isScrollEnd) {
+                            tv_read.setText("有更多的信息，点击查看");
+                            if (tv_read.getVisibility() == View.GONE) {
+                                lastPreviewItem = lv_chat.getCount();
+                                tv_read.setVisibility(View.VISIBLE);
+                            }
+                        }
                     } else if (chatMessage.getChatType() == PolyvChatMessage.CHATTYPE_RECEIVE_QUESTION) { // 提问/回复信息
                         if (PolyvChatMessage.EVENT_T_ANSWER.equals(chatMessage.getEvent())) {
                             if (chatMessage.getS_userId().equals(chatManager.getUserId()))
@@ -324,8 +335,10 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                         lv_chat.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                if (lists.size() > 0 && messages.size() > 0)
+                                if (lists.size() > 0 && messages.size() > 0) {
                                     lv_chat.setSelection(0);
+                                    isScrollEnd = false;
+                                }
                             }
                         }, 300);
                     break;
@@ -422,6 +435,7 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
     private void findIdAndNew() {
         lv_chat = (ListView) view.findViewById(R.id.lv_chat);
         tv_status = (TextView) view.findViewById(R.id.tv_status);
+        tv_read = (TextView) view.findViewById(R.id.tv_read);
         iv_send = (ImageView) view.findViewById(R.id.iv_send);
         et_talk = (GifEditText) view.findViewById(R.id.et_talk);
         vp_emo = (ViewPager) view.findViewById(R.id.vp_emo);
@@ -578,6 +592,21 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
 
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
+                switch (scrollState) {
+                    case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
+                        isScrollEnd = false;
+                        break;
+                    case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
+                        if (lv_chat.getLastVisiblePosition() == (lv_chat.getCount() - 1)) {
+                            View lastView = lv_chat.getChildAt(lv_chat.getLastVisiblePosition() - lv_chat.getFirstVisiblePosition());
+                            isScrollEnd = lastView.getBottom() <= lv_chat.getHeight();
+                        }
+                        if (lv_chat.getLastVisiblePosition() >= lastPreviewItem){
+                            tv_read.setVisibility(View.GONE);
+                            lastPreviewItem = -1;
+                        }
+                        break;
+                }
             }
 
             @Override
@@ -666,6 +695,7 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
         iv_emoswitch.setOnClickListener(this);
         et_talk.setOnClickListener(this);
         tv_loadmore.setOnClickListener(this);
+        tv_read.setOnClickListener(this);
     }
 
     private void resetPageImageView() {
@@ -715,6 +745,9 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
             polyvChatAdapter.updateStatusView(false, false, lastPosition);
         }
         lv_chat.setSelection(lastPosition);
+        tv_read.setVisibility(View.GONE);
+        lastPreviewItem = -1;
+        isScrollEnd = true;
         et_talk.setText("");
         closeKeybordAndEmo(et_talk, getContext());
     }
@@ -824,6 +857,11 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                 if ("加载更多...".equals(tv_loadmore.getText()))
                     loadMoreChatMessage(channelId, chatUserId);
                 break;
+            case R.id.tv_read:
+                tv_read.setVisibility(View.GONE);
+                lastPreviewItem = -1;
+                lv_chat.setSelection(lv_chat.getCount() - 1);
+                isScrollEnd = true;
         }
     }
 }

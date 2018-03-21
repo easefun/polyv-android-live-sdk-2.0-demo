@@ -52,6 +52,7 @@ import com.easefun.polyvsdk.marquee.PolyvMarqueeView;
 import com.easefun.polyvsdk.srt.PolyvSRTItemVO;
 import com.easefun.polyvsdk.video.PolyvMediaInfoType;
 import com.easefun.polyvsdk.video.PolyvPlayErrorReason;
+import com.easefun.polyvsdk.live.video.PolyvPlaybackParam;
 import com.easefun.polyvsdk.video.PolyvVideoView;
 import com.easefun.polyvsdk.video.auxiliary.PolyvAuxiliaryVideoView;
 import com.easefun.polyvsdk.video.listener.IPolyvOnAdvertisementCountDownListener;
@@ -85,6 +86,7 @@ import java.net.URL;
 public class PolyvPbPlayerActivity extends FragmentActivity {
     private static final String TAG = PolyvPbPlayerActivity.class.getSimpleName();
     private String userId, channelId, chatUserId, nickName, title;
+    private PolyvPlaybackParam playbackParam;
     // 聊天室管理类
     private PolyvChatManager chatManager;
     // 聊天室fragment
@@ -217,6 +219,7 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
         isGetLiveStatus = getIntent().getBooleanExtra("isGetLiveStatus", false);
         isFromPPTLive = getIntent().getBooleanExtra("isFromPPTLive", false);
         isToOtherLivePlayer = getIntent().getBooleanExtra("isToOtherLivePlayer", true);
+        playbackParam = getIntent().getParcelableExtra("playbackParam");
 
         addFragment();
         findIdAndNew();
@@ -676,6 +679,12 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
         return intent;
     }
 
+    // 添加回放参数，使用url播放回放时必须添加
+    public static Intent addPlaybackParam(Intent intent, PolyvPlaybackParam playbackParam) {
+        intent.putExtra("playbackParam", playbackParam);
+        return intent;
+    }
+
     /**
      * 使用url播放普通回放。<br/>
      */
@@ -684,6 +693,7 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
         this.isPlaybackUrl = true;
         this.title = title;
         prepare();
+        videoView.setPlackbackParam(playbackParam);
         videoView.setVideoURI(Uri.parse(playbackUrl));
     }
 

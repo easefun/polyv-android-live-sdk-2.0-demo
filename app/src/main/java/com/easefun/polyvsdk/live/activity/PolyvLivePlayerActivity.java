@@ -76,6 +76,8 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
     private PolyvMarqueeView marqueeView = null;
     private PolyvMarqueeItem marqueeItem = null;
     private PolyvMarqueeUtils marqueeUtils = null;
+    //暂停时显示的20%透明度背景
+    private View v_pause_bg;
     /**
      * 播放器控制栏
      */
@@ -159,6 +161,7 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
         viewLayout = (RelativeLayout) findViewById(R.id.view_layout);
         videoView = (PolyvLiveVideoView) findViewById(R.id.polyv_live_video_view);
         marqueeView = (PolyvMarqueeView) findViewById(R.id.polyv_marquee_view);
+        v_pause_bg = findViewById(R.id.v_pause_bg);
         mediaController = (PolyvPlayerMediaController) findViewById(R.id.polyv_player_media_controller);
         ProgressBar loadingProgress = (ProgressBar) findViewById(R.id.loading_progress);
         ImageView noStream = (ImageView) findViewById(R.id.no_stream);
@@ -194,6 +197,20 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
             @Override
             public void onPrepared() {
                 Toast.makeText(PolyvLivePlayerActivity.this, "准备完毕，可以播放", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        videoView.setOnVideoPlayListener(new PolyvLiveVideoViewListener.OnVideoPlayListener() {
+            @Override
+            public void onPlay() {
+                v_pause_bg.setVisibility(View.GONE);
+            }
+        });
+
+        videoView.setOnVideoPauseListener(new PolyvLiveVideoViewListener.OnVideoPauseListener() {
+            @Override
+            public void onPause() {
+                v_pause_bg.setVisibility(View.VISIBLE);
             }
         });
 
@@ -291,10 +308,12 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
                     playIntent = PolyvPbPlayerActivity.newUrlIntent(PolyvLivePlayerActivity.this, playbackUrl, title, false);
                     playIntent = PolyvPbPlayerActivity.addChatExtra(playIntent, userId, channelId, chatUserId, nickName, true);
                     playIntent = PolyvPbPlayerActivity.addLiveExtra(playIntent, false, isToOtherLivePlayer);
+                    playIntent = PolyvPbPlayerActivity.addPlaybackParam(playIntent, videoView.getPlaybackParam());
                 } else {
                     playIntent = PolyvPPTPbPlayerActivity.newUrlIntent(PolyvLivePlayerActivity.this, playbackUrl, title, recordFileSessionId, isList, false);
                     playIntent = PolyvPPTPbPlayerActivity.addChatExtra(playIntent, userId, channelId, chatUserId, nickName, true);
                     playIntent = PolyvPPTPbPlayerActivity.addLiveExtra(playIntent, false, isToOtherLivePlayer);
+                    playIntent = PolyvPPTPbPlayerActivity.addPlaybackParam(playIntent, videoView.getPlaybackParam());
                 }
                 startActivity(playIntent);
                 finish();

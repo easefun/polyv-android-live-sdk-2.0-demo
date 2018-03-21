@@ -90,3 +90,4 @@
 
 -keep class com.easefun.polyvsdk.**{*;}
 -keep class tv.danmaku.ijk.media.**{*;}
+-keep class io.agora.rtc.**{*;}

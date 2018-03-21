@@ -140,5 +140,19 @@
             android:fastScrollEnabled="false"
             android:listSelector="@android:color/transparent"
             android:transcriptMode="normal"></ListView>
+
+        <TextView
+            android:id="@+id/tv_read"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_status"
+            android:layout_centerHorizontal="true"
+            android:background="#d04a90e2"
+            android:gravity="center"
+            android:padding="@dimen/corners_common"
+            android:text="有更多新消息，点击查看"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/bottom_right_text_size"
+            android:visibility="gone"/>
     </RelativeLayout>
 </RelativeLayout>

@@ -91,6 +91,8 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
     private PolyvMarqueeView marqueeView = null;
     private PolyvMarqueeItem marqueeItem = null;
     private PolyvMarqueeUtils marqueeUtils = null;
+    //暂停时显示的20%透明度背景
+    private View v_pause_bg;
     /**
      * 播放器控制栏
      */
@@ -173,6 +175,7 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
         viewLayout = (PolyvGestureLayout) findViewById(R.id.view_layout);
         videoView = (PolyvLiveVideoView) findViewById(R.id.polyv_live_video_view);
         marqueeView = (PolyvMarqueeView) findViewById(R.id.polyv_marquee_view);
+        v_pause_bg = findViewById(R.id.v_pause_bg);
         mediaController = (PolyvPlayerMediaController) findViewById(R.id.polyv_player_media_controller);
         ProgressBar loadingProgress = (ProgressBar) findViewById(R.id.loading_progress);
         ImageView noStream = (ImageView) findViewById(R.id.no_stream);
@@ -213,7 +216,7 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
         videoView.setPPTLiveDrawView(ppt_view, true, false);
         // param1:videoview与ppt交换位置后，videoview的之前父控件下所有子view在ppt父控件中的位置(此时pptView已移除)
         // param2:videoview与ppt交换位置后，弹幕布局(非控件)所在的位置，没有时须设置为-1。弹幕控件需在弹幕布局的顶层，请参考polyv_fragment_danmu.xml的配置。
-        ppt_view.setVideoViewSwapToLayoutIndex(new int[]{0, 2, 7}, 1);
+        ppt_view.setVideoViewSwapToLayoutIndex(new int[]{0, 2, 8}, 1);
         // param1:pptview初始所在父控件中的索引
         // param2:弹幕布局(非控件)所在父控件的初始位置，另外没有时须设置为-1
         ppt_view.setPPTViewDefaultIndex(0, 1);
@@ -221,11 +224,12 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
         ppt_view.setLoadErrorListener(new PolyvLivePPTLoadErrorListener() {
             @Override
             public void onError(final String failTips, final int code) {
-                Toast.makeText(PolyvPPTLivePlayerActivity.this, failTips + "-" + code, Toast.LENGTH_SHORT).show();
+                Toast.makeText(PolyvPPTLivePlayerActivity.this, "加载ppt异常(" + code + ")", Toast.LENGTH_SHORT).show();
             }
         });
         // 初始化pptview的配置
         ppt_view.initParams(chatManager, videoView);
+        ppt_view.openBrush(true);
         // 初始化播放器的位置
         rl_container.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -283,6 +287,20 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
             @Override
             public void onPrepared() {
                 Toast.makeText(PolyvPPTLivePlayerActivity.this, "准备完毕，可以播放", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        videoView.setOnVideoPlayListener(new PolyvLiveVideoViewListener.OnVideoPlayListener() {
+            @Override
+            public void onPlay() {
+                v_pause_bg.setVisibility(View.GONE);
+            }
+        });
+
+        videoView.setOnVideoPauseListener(new PolyvLiveVideoViewListener.OnVideoPauseListener() {
+            @Override
+            public void onPause() {
+                v_pause_bg.setVisibility(View.VISIBLE);
             }
         });
 
@@ -380,10 +398,12 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
                     playIntent = PolyvPbPlayerActivity.newUrlIntent(PolyvPPTLivePlayerActivity.this, playbackUrl, title, false);
                     playIntent = PolyvPbPlayerActivity.addChatExtra(playIntent, userId, channelId, chatUserId, nickName, true);
                     playIntent = PolyvPbPlayerActivity.addLiveExtra(playIntent, true, isToOtherLivePlayer);
+                    playIntent = PolyvPbPlayerActivity.addPlaybackParam(playIntent, videoView.getPlaybackParam());
                 } else {
                     playIntent = PolyvPPTPbPlayerActivity.newUrlIntent(PolyvPPTLivePlayerActivity.this, playbackUrl, title, recordFileSessionId, isList, false);
                     playIntent = PolyvPPTPbPlayerActivity.addChatExtra(playIntent, userId, channelId, chatUserId, nickName, true);
                     playIntent = PolyvPPTPbPlayerActivity.addLiveExtra(playIntent, true, isToOtherLivePlayer);
+                    playIntent = PolyvPPTPbPlayerActivity.addPlaybackParam(playIntent, videoView.getPlaybackParam());
                 }
                 startActivity(playIntent);
                 finish();

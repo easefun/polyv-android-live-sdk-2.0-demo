@@ -259,7 +259,7 @@ public class PolyvPlayerMediaController extends PolyvLiveMediaController impleme
                 videoView.pause();
                 iv_play.setSelected(true);
             } else {
-                videoView.start();
+                videoView.onStart();
                 iv_play.setSelected(false);
             }
         }

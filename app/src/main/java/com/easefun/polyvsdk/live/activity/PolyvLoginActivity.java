@@ -205,6 +205,7 @@ public class PolyvLoginActivity extends Activity implements OnClickListener {
                                     String playbackUrl = livePlaybackEntity.channelJsonEntity.playbackUrl;
                                     String title = livePlaybackEntity.channelJsonEntity.title;
                                     intent = PolyvPbPlayerActivity.newUrlIntent(PolyvLoginActivity.this, playbackUrl, title, false);
+                                    intent = PolyvPbPlayerActivity.addPlaybackParam(intent, livePlaybackEntity.playbackParam);
                                 }
                                 startActivity(PolyvPbPlayerActivity.addChatExtra(intent, userId, channelId, chatUserId, nickName, true));
                                 break;
@@ -222,6 +223,7 @@ public class PolyvLoginActivity extends Activity implements OnClickListener {
                                     String playbackUrl = livePlaybackEntity.channelJsonEntity.playbackUrl;
                                     String title = livePlaybackEntity.channelJsonEntity.title;
                                     intent = PolyvPPTPbPlayerActivity.newUrlIntent(PolyvLoginActivity.this, playbackUrl, title, sessionId, isList, false);
+                                    intent = PolyvPPTPbPlayerActivity.addPlaybackParam(intent, livePlaybackEntity.playbackParam);
                                 }
                                 startActivity(PolyvPPTPbPlayerActivity.addChatExtra(intent, userId, channelId, chatUserId, nickName, true));
                                 break;
