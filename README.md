@@ -59,7 +59,7 @@ liveSDK1.0demo和liveSDK1.0不再进行功能更新，只维护bug。
 * 第二点是所有监听回调统一由PolyvLiveVideoViewListener类定义，并且都在主线程中回调。
 * 第三点是广告视频和直播视频使用不同的播放器进行播放，从而为实现视频预加载提供可能，因此增加了PolyvLiveAuxiliaryVideoView，用于播放广告视频。逻辑已全部由播放器控制。
 
-更多细节请在liveSDK2.0demo中查看。
+更多细节请在liveSDK2.0 demo中查看。
 
 ***
 #### 更多关于liveSDK2.0demo和liveSDK2.0的详细介绍请看[Wiki](https://github.com/easefun/polyv-android-live-sdk-2.0-demo/wiki)。
