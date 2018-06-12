@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 23000
-        versionName "2.3.0"
+        versionCode 23100
+        versionName "2.3.1"
 
         //64K 引用限制
         multiDexEnabled true
@@ -46,7 +46,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23+'
     compile 'com.android.support:design:23+'
     compile 'com.android.support:multidex:1.0.1'//64K 引用限制
-    compile 'com.easefun.polyv:polyvLivePlayer:2.3.0'//SDK核心包
+    compile 'com.easefun.polyv:polyvLivePlayer:2.3.1'//SDK核心包
     compile 'com.easefun.polyv:polyvPlayerABI:1.3.0'//SDK核心包
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'//demo中图片使用
     compile 'com.easefun.polyv:polyvGif:2.2.1'//demo中课程讨论区显示的内容里用到的包。不涉及播放器功能。

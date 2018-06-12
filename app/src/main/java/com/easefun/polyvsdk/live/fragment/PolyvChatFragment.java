@@ -14,6 +14,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.view.LayoutInflater;
@@ -281,6 +282,17 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                                 chatHistory.shutdown();
                                 tv_loadmore.setVisibility(View.GONE);
                                 polyvChatAdapter.clear();
+                                break;
+                            // 自定义信息
+                            case PolyvChatMessage.EVENT_CUSTOMER_MESSAGE:
+                                String content1 = chatMessage.getContent();//文本内容，可能为空
+                                String image = chatMessage.getImage();//图片url，可能为空
+                                String showCusMessage = "自定义信息：";
+                                if (!TextUtils.isEmpty(content1))
+                                    showCusMessage += content1;
+                                if (!TextUtils.isEmpty(image))
+                                    showCusMessage += image;//这里只是显示image url文本，如果有image，请自行加载图片显示
+                                chatMessage.setValues(new String[]{showCusMessage});
                                 break;
                         }
                     }
@@ -601,7 +613,7 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                             View lastView = lv_chat.getChildAt(lv_chat.getLastVisiblePosition() - lv_chat.getFirstVisiblePosition());
                             isScrollEnd = lastView.getBottom() <= lv_chat.getHeight();
                         }
-                        if (lv_chat.getLastVisiblePosition() >= lastPreviewItem){
+                        if (lv_chat.getLastVisiblePosition() >= lastPreviewItem) {
                             tv_read.setVisibility(View.GONE);
                             lastPreviewItem = -1;
                         }
