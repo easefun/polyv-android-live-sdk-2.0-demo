@@ -563,6 +563,11 @@ public class PolyvPPTPbPlayerActivity extends FragmentActivity {
             public void onTips(@NonNull String msg) {
                 questionView.showAnswerTips(msg);
             }
+
+            @Override
+            public void onTips(@NonNull String msg, int seek) {
+
+            }
         });
 
         videoView.setOnCompletionListener(new IPolyvOnCompletionListener2() {

@@ -43,6 +43,7 @@ import com.easefun.polyvsdk.live.video.PolyvLivePlayErrorReason;
 import com.easefun.polyvsdk.live.video.PolyvLiveVideoView;
 import com.easefun.polyvsdk.live.video.PolyvLiveVideoViewListener;
 import com.easefun.polyvsdk.live.video.auxiliary.PolyvLiveAuxiliaryVideoView;
+import com.easefun.polyvsdk.live.vo.PolyvLiveBitrateVO;
 import com.easefun.polyvsdk.live.vo.PolyvLiveChannelVO;
 import com.easefun.polyvsdk.live.vo.PolyvLiveMarqueeVo;
 import com.easefun.polyvsdk.marquee.PolyvMarqueeItem;
@@ -53,6 +54,7 @@ import java.net.URL;
 
 public class PolyvLivePlayerActivity extends FragmentActivity {
     private static final String TAG = PolyvLivePlayerActivity.class.getSimpleName();
+
     private String userId, channelId, chatUserId, nickName;
     // 聊天室管理类
     private PolyvChatManager chatManager;
@@ -106,6 +108,7 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
     // 当再次直播的类型是ppt直播时，是否需要跳转到ppt直播的播放器
     private boolean isToOtherLivePlayer = true;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null)
@@ -136,7 +139,13 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
             mediaController.changeToPortrait();
 
         setLivePlay(userId, channelId);
+
+//        String params = PolyvLiveSDKUtil.creatSignParams(PolyvApplication.appId,PolyvApplication.appSecret);
+//        videoView.getVideoDefinitions(params);
+
     }
+
+
 
     private void addFragment() {
         PolyvTabFragment tabFragment = new PolyvTabFragment();
@@ -193,6 +202,19 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
         videoView.setOpenPreload(true, 2);
         videoView.setNeedGestureDetector(true);
 
+        videoView.setAsyncDataCallback(new PolyvLiveVideoViewListener.AsyncDataCallback<PolyvLiveBitrateVO>() {
+            @Override
+            public void onSuccess(PolyvLiveBitrateVO data, int type) {
+                if(mediaController != null){
+                    mediaController.initBitList(data);
+                }
+            }
+
+            @Override
+            public void onFailed() {
+
+            }
+        });
         videoView.setOnPreparedListener(new PolyvLiveVideoViewListener.OnPreparedListener() {
             @Override
             public void onPrepared() {

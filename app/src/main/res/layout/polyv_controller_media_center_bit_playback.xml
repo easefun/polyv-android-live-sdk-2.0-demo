@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_center_bit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:alpha="0.7"
-    android:background="@color/top_left_layout_color_black"
-    android:visibility="gone" >
+    android:background="@color/top_left_layout_color_black">
 
-    <ImageView
-        android:id="@+id/iv_close_bit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:clickable="true"
-        android:padding="@dimen/talk_common_margin_l_l"
-        android:src="@drawable/polyv_btn_close" />
 
     <LinearLayout
+        tools:visibility="gone"
+        android:id="@+id/oldBitStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -47,4 +40,14 @@
             android:text="自动" />
     </LinearLayout>
 
+
+    <ImageView
+        android:id="@+id/iv_close_bit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:clickable="true"
+        android:padding="@dimen/talk_common_margin_l_l"
+        android:src="@drawable/polyv_btn_close" />
 </RelativeLayout>
