@@ -469,6 +469,11 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
             public void onTips(@NonNull String msg) {
                 questionView.showAnswerTips(msg);
             }
+
+            @Override
+            public void onTips(@NonNull String msg, int seek) {
+                questionView.showAnswerTips(msg);
+            }
         });
 
         videoView.setOnCompletionListener(new IPolyvOnCompletionListener2() {
@@ -748,6 +753,9 @@ public class PolyvPbPlayerActivity extends FragmentActivity {
             }
             if (PolyvScreenUtils.isPortrait(this) && tabViewPagerFragment.getOnlineListFragment().isLinkMicConnected()) {
                 tabViewPagerFragment.getOnlineListFragment().showStopCallDialog(true);
+                return true;
+            }
+            if (tabViewPagerFragment.onBackPress()) {
                 return true;
             }
         }

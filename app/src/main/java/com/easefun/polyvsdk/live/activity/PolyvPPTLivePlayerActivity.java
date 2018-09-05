@@ -52,6 +52,7 @@ import com.easefun.polyvsdk.live.video.PolyvLiveVideoView;
 import com.easefun.polyvsdk.live.video.PolyvLiveVideoViewListener;
 import com.easefun.polyvsdk.live.video.auxiliary.PolyvLiveAuxiliaryVideoView;
 import com.easefun.polyvsdk.live.view.PolyvGestureLayout;
+import com.easefun.polyvsdk.live.vo.PolyvLiveBitrateVO;
 import com.easefun.polyvsdk.live.vo.PolyvLiveChannelVO;
 import com.easefun.polyvsdk.live.vo.PolyvLiveMarqueeVo;
 import com.easefun.polyvsdk.marquee.PolyvMarqueeItem;
@@ -174,6 +175,7 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
     private void findIdAndNew() {
         viewLayout = (PolyvGestureLayout) findViewById(R.id.view_layout);
         videoView = (PolyvLiveVideoView) findViewById(R.id.polyv_live_video_view);
+
         marqueeView = (PolyvMarqueeView) findViewById(R.id.polyv_marquee_view);
         v_pause_bg = findViewById(R.id.v_pause_bg);
         mediaController = (PolyvPlayerMediaController) findViewById(R.id.polyv_player_media_controller);
@@ -273,6 +275,8 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
                 }
             }
         });
+
+
     }
 
     private void initView() {
@@ -522,6 +526,20 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
                 volumeView.setViewVolumeValue(volume, end);
             }
         });
+
+        videoView.setAsyncDataCallback(new PolyvLiveVideoViewListener.AsyncDataCallback<PolyvLiveBitrateVO>() {
+            @Override
+            public void onSuccess(PolyvLiveBitrateVO data, int type) {
+                if(mediaController != null){
+                    mediaController.initBitList(data);
+                }
+            }
+
+            @Override
+            public void onFailed() {
+
+            }
+        });
     }
 
     private void prepare() {
@@ -579,6 +597,9 @@ public class PolyvPPTLivePlayerActivity extends FragmentActivity {
             }
             if (PolyvScreenUtils.isPortrait(this) && tabViewPagerFragment.getOnlineListFragment().isLinkMicConnected()) {
                 tabViewPagerFragment.getOnlineListFragment().showStopCallDialog(true);
+                return true;
+            }
+            if (tabViewPagerFragment.onBackPress()) {
                 return true;
             }
         }
