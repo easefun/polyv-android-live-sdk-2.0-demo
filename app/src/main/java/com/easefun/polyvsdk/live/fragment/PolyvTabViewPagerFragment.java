@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 import com.easefun.polyvsdk.live.R;
 import com.easefun.polyvsdk.live.adapter.PolyvTabVPFragmentAdapter;
 import com.easefun.polyvsdk.live.chat.PolyvChatManager;
-import com.easefun.polyvsdk.live.chat.api.PolyvChatQuiz;
-import com.easefun.polyvsdk.live.chat.api.listener.PolyvChatQuizListener;
+import com.easefun.polyvsdk.live.chat.api.PolyvClassDetail;
+import com.easefun.polyvsdk.live.chat.api.entity.PolyvClassDetailEntity;
+import com.easefun.polyvsdk.live.chat.api.listener.PolyvClassDetailListener;
+import com.easefun.polyvsdk.live.util.PolyvScreenUtils;
 import com.easefun.polyvsdk.live.video.PolyvLiveVideoView;
 import com.easefun.polyvsdk.video.PolyvVideoView;
 
@@ -33,7 +35,7 @@ public class PolyvTabViewPagerFragment extends Fragment {
     private int currentIndex;
 
     private List<Fragment> fragmentLists;
-    private PolyvChatQuiz chatQuiz;
+    private PolyvClassDetail classDetail;
 
     public void initConfig(PolyvChatFragment chatFragment) {
         this.chatFragment = chatFragment;
@@ -110,16 +112,36 @@ public class PolyvTabViewPagerFragment extends Fragment {
         initView();
     }
 
-    // 获取后台设置的提问功能是否开启
-    private void getChatQuiz(String channelId) {
-        chatQuiz.hasQuiz(channelId, Integer.MAX_VALUE, new PolyvChatQuizListener() {
+    //获取菜单列表
+    private void getClassDetail(final String channelId) {
+        classDetail.getClassDetail(channelId, Integer.MAX_VALUE, new PolyvClassDetailListener() {
             @Override
-            public void success(boolean isOpen) {
-                if (isOpen) {
-                    fragmentLists.add(questionFragment);
-                    tabVPFragmentAdapter.notifyDataSetChanged();
-                    vp_tab.setOffscreenPageLimit(fragmentLists.size() - 1);
-                    tabFragment.addQuestionTab(currentIndex);
+            public void success(PolyvClassDetailEntity entity) {
+                for (PolyvClassDetailEntity.ChannelMenu channelMenu : entity.channelMenus) {
+                    if (PolyvClassDetailEntity.ChannelMenu.MENUTYPE_QUIZ.equals(channelMenu.menuType)) {
+                        addFragment(questionFragment);
+                        tabFragment.addQuestionTab(currentIndex);
+                        break;
+                    }
+                }
+                for (PolyvClassDetailEntity.ChannelMenu channelMenu : entity.channelMenus) {
+                    Fragment fragment = null;
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("classDetail", entity);
+                    if (PolyvClassDetailEntity.ChannelMenu.MENUTYPE_DESC.equals(channelMenu.menuType)) {
+                        fragment = new PolyvLiveIntroduceFragment();
+                    } else if (PolyvClassDetailEntity.ChannelMenu.MENUTYPE_IFRAME.equals(channelMenu.menuType)) {
+                        fragment = new PolyvIFrameFragment();
+                        bundle.putString("url", channelMenu.content);
+                    } else if (PolyvClassDetailEntity.ChannelMenu.MENUTYPE_TEXT.equals(channelMenu.menuType)) {
+                        fragment = new PolyvCustomMenuFragment();
+                        bundle.putString("text", channelMenu.content);
+                    }
+                    if (fragment != null) {
+                        fragment.setArguments(bundle);
+                        addFragment(fragment);
+                        tabFragment.addTab(channelMenu.name, currentIndex);
+                    }
                 }
             }
 
@@ -129,13 +151,19 @@ public class PolyvTabViewPagerFragment extends Fragment {
         });
     }
 
+    private void addFragment(Fragment fragment) {
+        fragmentLists.add(fragment);
+        tabVPFragmentAdapter.notifyDataSetChanged();
+        vp_tab.setOffscreenPageLimit(fragmentLists.size() - 1);
+    }
+
     private void findId() {
         vp_tab = (ViewPager) view.findViewById(R.id.vp_tab);
         tabFragment = (PolyvTabFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fl_tab);
     }
 
     private void initView() {
-        chatQuiz = new PolyvChatQuiz();
+        classDetail = new PolyvClassDetail();
         onlineListFragment = new PolyvOnlineListFragment();
         playbackListFragment = new PolyvPlaybackListFragment();
         questionFragment = new PolyvQuestionFragment();
@@ -145,7 +173,7 @@ public class PolyvTabViewPagerFragment extends Fragment {
             fragmentLists.add(onlineListFragment);
         else
             fragmentLists.add(playbackListFragment);
-        getChatQuiz(getActivity().getIntent().getStringExtra("channelId"));
+        getClassDetail(getActivity().getIntent().getStringExtra("channelId"));
         tabVPFragmentAdapter = new PolyvTabVPFragmentAdapter(getActivity().getSupportFragmentManager(), fragmentLists);
         vp_tab.setAdapter(tabVPFragmentAdapter);
         vp_tab.setOffscreenPageLimit(fragmentLists.size() - 1);
@@ -182,9 +210,35 @@ public class PolyvTabViewPagerFragment extends Fragment {
         return currentIndex;
     }
 
+    public boolean onBackPress() {
+        if (PolyvScreenUtils.isPortrait(getActivity())) {
+            Fragment fragment = tabVPFragmentAdapter.getItem(currentIndex);
+            if (fragment instanceof PolyvIFrameFragment) {
+                PolyvIFrameFragment iFrameFragment = (PolyvIFrameFragment) fragment;
+                if (iFrameFragment.getWebView() != null && iFrameFragment.getWebView().canGoBack()) {
+                    iFrameFragment.getWebView().goBack();
+                    return true;
+                }
+            } else if (fragment instanceof PolyvLiveIntroduceFragment) {
+                PolyvLiveIntroduceFragment liveIntroduceFrameFragment = (PolyvLiveIntroduceFragment) fragment;
+                if (liveIntroduceFrameFragment.getWebView() != null && liveIntroduceFrameFragment.getWebView().canGoBack()) {
+                    liveIntroduceFrameFragment.getWebView().goBack();
+                    return true;
+                }
+            } else if (fragment instanceof PolyvCustomMenuFragment) {
+                PolyvCustomMenuFragment customMenuFrameFragment = (PolyvCustomMenuFragment) fragment;
+                if (customMenuFrameFragment.getWebView() != null && customMenuFrameFragment.getWebView().canGoBack()) {
+                    customMenuFrameFragment.getWebView().goBack();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        chatQuiz.shutdown();
+        classDetail.shutdown();
     }
 }

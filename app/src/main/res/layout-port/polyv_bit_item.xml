@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/live_bit_name"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:layout_margin="8dp"
+        android:background="@drawable/polyv_live_bitrate_port_selector"
+        android:gravity="center"
+        android:text="高清"
+        android:textColor="@android:color/white"
+        android:textSize="9sp" />
+</LinearLayout>

@@ -4,7 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,21 +13,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.easefun.polyvsdk.live.R;
-import com.easefun.polyvsdk.live.util.PolyvScreenUtils;
 
 public class PolyvTabFragment extends Fragment implements View.OnClickListener {
     //fragmentView
     private View view;
     //viewpagerFragment
     private PolyvTabViewPagerFragment viewPagerFragment;
+    private LinearLayout ll_tab;
     private TextView tv_chat, tv_online, tv_playback, tv_question;
     // tab的导航线
     private View v_line;
-    private int screenWidth;
-    private int length;
-    private int eLength;
     private LinearLayout.LayoutParams lp;
-    private int count = 2;
 
     @Nullable
     @Override
@@ -45,6 +41,7 @@ public class PolyvTabFragment extends Fragment implements View.OnClickListener {
     }
 
     private void findId() {
+        ll_tab = (LinearLayout) view.findViewById(R.id.ll_tab);
         tv_chat = (TextView) view.findViewById(R.id.tv_chat);
         tv_online = (TextView) view.findViewById(R.id.tv_online);
         tv_playback = (TextView) view.findViewById(R.id.tv_playback);
@@ -69,11 +66,44 @@ public class PolyvTabFragment extends Fragment implements View.OnClickListener {
     }
 
     public void addQuestionTab(int currentIndex) {
-        ((ViewGroup) tv_chat.getParent()).addView(tv_question);
-        count++;
-        int sLength = screenWidth / count;
-        eLength = (sLength - length) / 2;
+        addTab(tv_question, currentIndex);
+    }
+
+    public void addTab(String text, int currentIndex) {
+        addTab(generateTabView(text), currentIndex);
+    }
+
+    private void addTab(TextView textView, int currentIndex) {
+        ll_tab.addView(textView);
+        final int index = ll_tab.getChildCount() - 1;
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPagerFragment.setCurrentItem(index);
+            }
+        });
+        resetLineLength();
         resetViewStatus(currentIndex);
+    }
+
+    private void resetLineLength() {
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) v_line.getLayoutParams();
+        lp.width = ll_tab.getWidth() / ll_tab.getChildCount();
+        v_line.setLayoutParams(lp);
+    }
+
+    private TextView generateTabView(String text) {
+        TextView textView = new TextView(getActivity());
+        textView.setGravity(Gravity.CENTER);
+        textView.setBackgroundDrawable(getResources().getDrawable(R.drawable.polyv_commom_click_color_gray));
+        textView.setText(text);
+        textView.setTextSize((getResources().getDimension(R.dimen.tv_textsize) / getResources().getDisplayMetrics().density) + 0.5f);
+        textView.setTextColor(getResources().getColor(R.color.bottom_et_color_gray));
+        textView.setClickable(true);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(-1, -1);
+        lp.weight = 1;
+        textView.setLayoutParams(lp);
+        return textView;
     }
 
     private void initLineSetting() {
@@ -81,15 +111,7 @@ public class PolyvTabFragment extends Fragment implements View.OnClickListener {
         v_line.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                final DisplayMetrics dm = new DisplayMetrics();
-                getActivity().getWindow().getWindowManager().getDefaultDisplay().getMetrics(dm);
-                if (PolyvScreenUtils.isLandscape(getContext()))
-                    screenWidth = dm.heightPixels;
-                else
-                    screenWidth = dm.widthPixels;
-                length = v_line.getWidth();
-                int sLength = screenWidth / count;
-                eLength = (sLength - length) / 2;
+                resetLineLength();
                 if (viewPagerFragment.getCurrentIndex() == 0)
                     resetViewStatus(0);
                 if (Build.VERSION.SDK_INT >= 16)
@@ -101,36 +123,15 @@ public class PolyvTabFragment extends Fragment implements View.OnClickListener {
     }
 
     public void resetViewStatus(int arg0) {
-        tv_chat.setSelected(false);
-        tv_online.setSelected(false);
-        tv_playback.setSelected(false);
-        tv_question.setSelected(false);
-        tv_chat.setTextColor(getResources().getColor(R.color.bottom_et_color_gray));
-        tv_online.setTextColor(getResources().getColor(R.color.bottom_et_color_gray));
-        tv_playback.setTextColor(getResources().getColor(R.color.bottom_et_color_gray));
-        tv_question.setTextColor(getResources().getColor(R.color.bottom_et_color_gray));
-        switch (arg0) {
-            case 0:
-                tv_chat.setSelected(true);
-                tv_chat.setTextColor(getResources().getColor(R.color.center_view_color_blue));
-                lp.leftMargin = arg0 * length + 1 * eLength;
-                break;
-            case 1:
-                TextView textView;
-                if (viewPagerFragment.isLive())
-                    textView = tv_online;
-                else
-                    textView = tv_playback;
-                textView.setSelected(true);
-                textView.setTextColor(getResources().getColor(R.color.center_view_color_blue));
-                lp.leftMargin = arg0 * length + 3 * eLength;
-                break;
-            case 2:
-                tv_question.setSelected(true);
-                tv_question.setTextColor(getResources().getColor(R.color.center_view_color_blue));
-                lp.leftMargin = arg0 * length + 5 * eLength;
-                break;
+        for (int i = 0; i < ll_tab.getChildCount(); i++) {
+            TextView view = (TextView) ll_tab.getChildAt(i);
+            view.setSelected(false);
+            view.setTextColor(getResources().getColor(R.color.bottom_et_color_gray));
         }
+        TextView textView = (TextView) ll_tab.getChildAt(arg0);
+        textView.setSelected(true);
+        textView.setTextColor(getResources().getColor(R.color.center_view_color_blue));
+        lp.leftMargin = textView.getLeft();
         v_line.setLayoutParams(lp);
     }
 

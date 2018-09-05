@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="13dp"
+        android:text="直播标题"
+        android:textColor="#00101b"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/iv_livecover"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_alignLeft="@id/tv_title"
+        android:layout_below="@id/tv_title"
+        android:layout_marginTop="11dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tv_publisher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/iv_livecover"
+        android:layout_marginLeft="11dp"
+        android:layout_toRightOf="@id/iv_livecover"
+        android:text="主持人"
+        android:textColor="#90a4ae"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/iv_viewer"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_alignBottom="@id/iv_livecover"
+        android:layout_alignLeft="@id/tv_publisher"
+        android:src="@drawable/polyv_icon_viewer" />
+
+    <TextView
+        android:id="@+id/tv_viewer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/iv_viewer"
+        android:layout_marginLeft="6dp"
+        android:layout_toRightOf="@id/iv_viewer"
+        android:text="12"
+        android:textColor="#90a4ae"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/iv_likes"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_alignBottom="@id/iv_livecover"
+        android:layout_marginLeft="22dp"
+        android:layout_toRightOf="@id/tv_viewer"
+        android:src="@drawable/polyv_icon_likes" />
+
+    <TextView
+        android:id="@+id/tv_likes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/iv_viewer"
+        android:layout_marginLeft="6dp"
+        android:layout_toRightOf="@id/iv_likes"
+        android:text="12"
+        android:textColor="#90a4ae"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/v_s1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/iv_livecover"
+        android:layout_margin="13dp"
+        android:background="#90a4ae" />
+
+    <TextView
+        android:id="@+id/tv_starttime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/v_s1"
+        android:layout_marginLeft="13dp"
+        android:text="12:12"
+        android:textColor="#90a4ae"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/v_s1"
+        android:layout_marginRight="13dp"
+        android:text="正在直播"
+        android:textColor="#2196f3"
+        android:textSize="14sp" />
+
+    <View
+        android:id="@+id/v_s2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/tv_starttime"
+        android:layout_marginTop="13dp"
+        android:background="#90a4ae" />
+</RelativeLayout>
