@@ -154,5 +154,13 @@
             android:textColor="#ffffff"
             android:textSize="@dimen/bottom_right_text_size"
             android:visibility="gone"/>
+
+        <com.easefun.polyvsdk.live.view.PolyvLikeIconView
+            android:id="@+id/liv_like"
+            android:layout_width="180dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="16dp" />
     </RelativeLayout>
 </RelativeLayout>

@@ -55,14 +55,15 @@ import com.easefun.polyvsdk.live.playback.player.PolyvPlayerQuestionView;
 import com.easefun.polyvsdk.live.playback.util.PolyvErrorMessageUtils;
 import com.easefun.polyvsdk.live.player.PolyvPlayerLightView;
 import com.easefun.polyvsdk.live.player.PolyvPlayerVolumeView;
+import com.easefun.polyvsdk.live.util.PolyvKickAssist;
 import com.easefun.polyvsdk.live.util.PolyvScreenUtils;
+import com.easefun.polyvsdk.live.video.PolyvPlaybackParam;
 import com.easefun.polyvsdk.live.view.PolyvGestureLayout;
 import com.easefun.polyvsdk.marquee.PolyvMarqueeItem;
 import com.easefun.polyvsdk.marquee.PolyvMarqueeView;
 import com.easefun.polyvsdk.srt.PolyvSRTItemVO;
 import com.easefun.polyvsdk.video.PolyvMediaInfoType;
 import com.easefun.polyvsdk.video.PolyvPlayErrorReason;
-import com.easefun.polyvsdk.live.video.PolyvPlaybackParam;
 import com.easefun.polyvsdk.video.PolyvVideoView;
 import com.easefun.polyvsdk.video.auxiliary.PolyvAuxiliaryVideoView;
 import com.easefun.polyvsdk.video.listener.IPolyvOnAdvertisementCountDownListener;
@@ -224,6 +225,10 @@ public class PolyvPPTPbPlayerActivity extends FragmentActivity {
         if (savedInstanceState != null)
             savedInstanceState.putParcelable("android:support:fragments", null);
         super.onCreate(savedInstanceState);
+        //检测用户是否被踢，用户被踢则不能观看直播及回放，退出应用再进入可恢复
+        channelId = getIntent().getStringExtra("channelId");
+        if (PolyvKickAssist.checkKickAndTips(channelId, this))
+            return;
         setContentView(R.layout.polyv_activity_player_pptplayback);
         // 生成播放器父控件的宽高比为16:9的高
         PolyvScreenUtils.generateHeight16_9(this);
@@ -232,7 +237,6 @@ public class PolyvPPTPbPlayerActivity extends FragmentActivity {
         nickName = getIntent().getStringExtra("nickName");
 
         userId = getIntent().getStringExtra("userId");
-        channelId = getIntent().getStringExtra("channelId");
 
         isGetLiveStatus = getIntent().getBooleanExtra("isGetLiveStatus", false);
         isFromPPTLive = getIntent().getBooleanExtra("isFromPPTLive", false);
@@ -913,10 +917,14 @@ public class PolyvPPTPbPlayerActivity extends FragmentActivity {
     }
 
     private void clearGestureInfo() {
-        videoView.clearGestureInfo();
-        progressView.hide();
-        volumeView.hide();
-        lightView.hide();
+        if (videoView != null)
+            videoView.clearGestureInfo();
+        if (progressView != null)
+            progressView.hide();
+        if (volumeView != null)
+            volumeView.hide();
+        if (lightView != null)
+            lightView.hide();
     }
 
     @Override
@@ -941,7 +949,8 @@ public class PolyvPPTPbPlayerActivity extends FragmentActivity {
     public void onStop() {
         super.onStop();
         //弹出去暂停
-        isPlay = videoView.onActivityStop();
+        if (videoView != null)
+            isPlay = videoView.onActivityStop();
     }
 
     @Override
@@ -960,13 +969,21 @@ public class PolyvPPTPbPlayerActivity extends FragmentActivity {
         if (live_status != null)
             live_status.shutdownSchedule();
         // 退出聊天室
-        chatManager.disconnect();
-        rl_parent.removeOnLayoutChangeListener(rl_parent_onLayoutChangeListener);
-        videoView.destroy();
-        questionView.hide();
-        auditionView.hide();
-        auxiliaryView.hide();
-        firstStartView.hide();
-        mediaController.disable();
+        if (chatManager != null)
+            chatManager.disconnect();
+        if (rl_parent != null)
+            rl_parent.removeOnLayoutChangeListener(rl_parent_onLayoutChangeListener);
+        if (videoView != null)
+            videoView.destroy();
+        if (questionView != null)
+            questionView.hide();
+        if (auditionView != null)
+            auditionView.hide();
+        if (auxiliaryView != null)
+            auxiliaryView.hide();
+        if (firstStartView != null)
+            firstStartView.hide();
+        if (mediaController != null)
+            mediaController.disable();
     }
 }

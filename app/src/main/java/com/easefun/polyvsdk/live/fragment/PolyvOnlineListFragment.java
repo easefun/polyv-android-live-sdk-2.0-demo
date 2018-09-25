@@ -179,19 +179,14 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
                     if (!leaveEntity.user.userId.equals(linkMicManager.getLinkMicUid()))
                         onlineListAdapter.updateLinkMicJoinLeave(leaveEntity);
                     break;
-                // 收到加入连麦成功事件(包括所有学员)
+                // 收到加入连麦成功事件
                 case JOINSUCCESS:
-                    PolyvJoinSuccessEntity successEntity = (PolyvJoinSuccessEntity) msg.obj;
-                    if (!successEntity.user.userId.equals(linkMicManager.getLinkMicUid()))
-                        onlineListAdapter.updateLinkMicJoinSuccess(successEntity);
-                    else {
-                        Toast.makeText(getContext(), "加入通话成功", Toast.LENGTH_SHORT).show();
-                        updateStatusAndButton(LINKMICSTATUS_CONNECTED);
-                        // 获取加入连麦前的播放器音量
-                        videoVolume = viewPagerFragment.getVideoVolume();
-                        // 加入通话成功时，播放器静音
-                        viewPagerFragment.setVideoVolume(0);
-                    }
+                    Toast.makeText(getContext(), "加入通话成功", Toast.LENGTH_SHORT).show();
+                    updateStatusAndButton(LINKMICSTATUS_CONNECTED);
+                    // 获取加入连麦前的播放器音量
+                    videoVolume = viewPagerFragment.getVideoVolume();
+                    // 加入通话成功时，播放器静音
+                    viewPagerFragment.setVideoVolume(0);
                     break;
                 // 收到老师同意通话事件(仅能收到自己的)
                 case JOINRESPONSE:
@@ -341,6 +336,10 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
 
             @Override
             public void onJoinChannelSuccess(String channel, int uid, int elapsed) {
+                if (linkMicManager.isJoinStatus()) {
+                    Message message = handler.obtainMessage(JOINSUCCESS);
+                    handler.sendMessage(message);
+                }
                 handler.removeMessages(LINKMICNEEDTIME);
             }
 
@@ -404,14 +403,9 @@ public class PolyvOnlineListFragment extends Fragment implements View.OnClickLis
                 handler.sendMessage(message);
             }
 
-            // 加入连麦成功事件
             @Override
             public void joinSuccess(PolyvJoinSuccessEntity successEntity) {
-                if (linkMicManager.isJoinStatus()) {
-                    Message message = handler.obtainMessage(JOINSUCCESS);
-                    message.obj = successEntity;
-                    handler.sendMessage(message);
-                }
+                //已废弃，使用onJoinChannelSuccess代替
             }
 
             // 教师端麦克风的状态，及结束通话事件

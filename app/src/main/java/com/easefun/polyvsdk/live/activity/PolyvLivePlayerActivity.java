@@ -36,6 +36,7 @@ import com.easefun.polyvsdk.live.player.PolyvPlayerLightView;
 import com.easefun.polyvsdk.live.player.PolyvPlayerMediaController;
 import com.easefun.polyvsdk.live.player.PolyvPlayerVolumeView;
 import com.easefun.polyvsdk.live.util.AdmasterSdkUtils;
+import com.easefun.polyvsdk.live.util.PolyvKickAssist;
 import com.easefun.polyvsdk.live.util.PolyvMarqueeUtils;
 import com.easefun.polyvsdk.live.util.PolyvScreenUtils;
 import com.easefun.polyvsdk.live.video.PolyvLiveMediaInfoType;
@@ -114,6 +115,10 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
         if (savedInstanceState != null)
             savedInstanceState.putParcelable("android:support:fragments", null);
         super.onCreate(savedInstanceState);
+        //检测用户是否被踢，用户被踢则不能观看直播及回放，退出应用再进入可恢复
+        channelId = getIntent().getStringExtra("channelId");
+        if (PolyvKickAssist.checkKickAndTips(channelId, this))
+            return;
         setContentView(R.layout.polyv_activity_player_live);
         // 生成播放器父控件的宽高比为16:9的高
         PolyvScreenUtils.generateHeight16_9(this);
@@ -124,7 +129,6 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
         nickName = getIntent().getStringExtra("nickName");
 
         userId = getIntent().getStringExtra("userId");
-        channelId = getIntent().getStringExtra("channelId");
 
         isToOtherLivePlayer = getIntent().getBooleanExtra("isToOtherLivePlayer", true);
 
@@ -555,9 +559,12 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
     }
 
     private void clearGestureInfo() {
-        videoView.clearGestureInfo();
-        lightView.hide();
-        volumeView.hide();
+        if (videoView != null)
+            videoView.clearGestureInfo();
+        if (lightView != null)
+            lightView.hide();
+        if (volumeView != null)
+            volumeView.hide();
     }
 
     @Override
@@ -581,8 +588,10 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
     @Override
     public void onStop() {
         super.onStop();
-        //弹出去暂停
-        isPlay = videoView.onActivityStop();
+        if (videoView != null) {
+            //弹出去暂停
+            isPlay = videoView.onActivityStop();
+        }
     }
 
     @Override
@@ -594,10 +603,14 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
         if (marqueeUtils != null)
             marqueeUtils.shutdown();
         // 退出聊天室
-        chatManager.disconnect();
-        videoView.destroy();
-        auxiliaryView.hide();
-        mediaController.disable();
+        if (chatManager != null)
+            chatManager.disconnect();
+        if (videoView != null)
+            videoView.destroy();
+        if (auxiliaryView != null)
+            auxiliaryView.hide();
+        if (mediaController != null)
+            mediaController.disable();
         // 关闭广告监测器
         AdmasterSdk.terminateSDK();
     }

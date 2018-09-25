@@ -54,6 +54,8 @@ import com.easefun.polyvsdk.live.chat.api.PolyvChatHistory;
 import com.easefun.polyvsdk.live.chat.api.listener.PolyvChatBadwordListener;
 import com.easefun.polyvsdk.live.chat.api.listener.PolyvChatHistoryListener;
 import com.easefun.polyvsdk.live.util.PolyvFaceManager;
+import com.easefun.polyvsdk.live.util.PolyvKickAssist;
+import com.easefun.polyvsdk.live.view.PolyvLikeIconView;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -102,6 +104,9 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
     // 登录聊天室的学员id，频道所属的用户id，频道id
     private String chatUserId, userId, channelId;
     private Animation collapseAnimation;
+
+    // 点赞
+    private PolyvLikeIconView liv_like;
 
     // 表情ViewPager
     private ViewPager vp_emo;
@@ -162,6 +167,9 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                                 if (chatMessage.getUser().getUid().equals(chatManager.getUid())) {
                                     nick = nick + "(我)";
                                     viewPagerFragment.getOnlineListFragment().kickOrShield(true);
+                                    //被踢之后不能再观看直播，需要退出app再次进入才行
+                                    PolyvKickAssist.setKickValue(channelId, true);
+                                    PolyvKickAssist.checkKickAndTips(channelId, getActivity());
                                 }
                                 // 这里需要自定义显示的信息
                                 chatMessage.setValues(new String[]{nick + "被踢"});
@@ -204,9 +212,13 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                                 else
                                     chatMessage.setValues(new String[]{"聊天室开启"});
                                 break;
-                            // 公告
+                            // 公告(这里实则是管理员的最后一次发言)
                             case PolyvChatMessage.EVENT_GONGGAO:
-                                chatMessage.setValues(new String[]{"公告 " + chatMessage.getContent()});
+                                chatMessage.setValues(new String[]{"管理员发言：" + chatMessage.getContent()});
+                                break;
+                            // 公告
+                            case PolyvChatMessage.EVENT_BULLETIN:
+                                chatMessage.setValues(new String[]{"公告：" + chatMessage.getContent().replaceAll("<br/>", "\n")});
                                 break;
                             // 送花事件
                             case PolyvChatMessage.EVENT_FLOWERS:
@@ -264,10 +276,11 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
                                 break;
                             // 点赞
                             case PolyvChatMessage.EVENT_LIKES:
-                                String sendNick3 = chatMessage.getUser().getNick();
-                                SpannableStringBuilder span3 = new SpannableStringBuilder(sendNick3 + "觉得主持人讲得很棒！");
-                                span3.setSpan(new ForegroundColorSpan(Color.rgb(255, 140, 0)), 0, sendNick3.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                                chatMessage.setValues(new CharSequence[]{span3});
+//                                String sendNick3 = chatMessage.getUser().getNick();
+//                                SpannableStringBuilder span3 = new SpannableStringBuilder(sendNick3 + "觉得主持人讲得很棒！");
+//                                span3.setSpan(new ForegroundColorSpan(Color.rgb(255, 140, 0)), 0, sendNick3.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//                                chatMessage.setValues(new CharSequence[]{span3});
+                                liv_like.addLoveIcon();
                                 break;
                             // 登录
                             case PolyvChatMessage.EVENT_LOGIN:
@@ -459,6 +472,7 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
         iv_emoswitch = (ImageView) view.findViewById(R.id.iv_emoswitch);
         rl_bot = (RelativeLayout) view.findViewById(R.id.rl_bot);
         tv_loadmore = (TextView) view.findViewById(R.id.tv_loadmore);
+        liv_like = (PolyvLikeIconView) view.findViewById(R.id.liv_like);
         chatHistory = new PolyvChatHistory();
         chatBadword = new PolyvChatBadword();
         viewPagerFragment = (PolyvTabViewPagerFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fl_tag_viewpager);
@@ -708,6 +722,12 @@ public class PolyvChatFragment extends Fragment implements OnClickListener {
         et_talk.setOnClickListener(this);
         tv_loadmore.setOnClickListener(this);
         tv_read.setOnClickListener(this);
+        liv_like.setOnButtonClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chatManager.sendLikes();
+            }
+        });
     }
 
     private void resetPageImageView() {
