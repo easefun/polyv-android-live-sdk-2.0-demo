@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 
 import com.easefun.polyvsdk.live.R;
 import com.easefun.polyvsdk.live.util.PolyvBezierEvaluator;
+import com.easefun.polyvsdk.live.util.PolyvScreenUtils;
 
 import java.lang.ref.WeakReference;
 import java.util.Random;
@@ -77,6 +78,7 @@ public class PolyvLikeIconView extends RelativeLayout {
             RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
             rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
             rlp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+            rlp.bottomMargin = PolyvScreenUtils.dip2px(getContext(), 16);
             rlp.rightMargin = width / 8;
             view.setLayoutParams(rlp);
 
@@ -105,7 +107,7 @@ public class PolyvLikeIconView extends RelativeLayout {
                 random.nextInt(width),
                 random.nextInt(height / 2));
         PointF pointStart = new PointF((width - iconWidth) / 1.6f,
-                height - iconHeight * 3);
+                height - iconHeight * 3 - PolyvScreenUtils.dip2px(getContext(), 16));
         PointF pointEnd = new PointF(random.nextInt(width), random.nextInt(height / 2));
 
         //贝塞尔估值器

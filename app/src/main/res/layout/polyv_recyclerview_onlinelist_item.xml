@@ -13,35 +13,35 @@
         android:src="@drawable/polyv_avatar_def" />
 
     <TextView
-        android:id="@+id/tv_nickname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/et_marginright"
-        android:layout_toRightOf="@id/iv_avatar"
-        android:ellipsize="end"
-        android:maxWidth="@dimen/top_center_ppt_player_width_land"
-        android:singleLine="true"
-        android:text="助教"
-        android:textColor="@color/top_left_layout_color_black"
-        android:textSize="@dimen/tv_textsize_l" />
-
-    <TextView
         android:id="@+id/tv_usertype"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/et_marginright"
-        android:layout_toRightOf="@id/tv_nickname"
-        android:background="@drawable/polyv_tv_corners_white"
+        android:layout_toRightOf="@id/iv_avatar"
+        android:background="@drawable/poyv_tv_actor_color"
         android:gravity="center"
-        android:paddingBottom="1dp"
+        android:paddingBottom="2dp"
         android:paddingLeft="@dimen/rl_paddingright"
         android:paddingRight="@dimen/rl_paddingright"
-        android:paddingTop="1dp"
+        android:paddingTop="2dp"
         android:text="讲师"
-        android:textColor="@color/top_et_color_gray"
+        android:textColor="@color/top_layout_color_white"
         android:textSize="@dimen/tv_textsize_s" />
+
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/et_marginright"
+        android:ellipsize="end"
+        android:maxWidth="@dimen/top_center_ppt_player_width_land"
+        android:layout_toRightOf="@id/tv_usertype"
+        android:singleLine="true"
+        android:text="助教"
+        android:textColor="@color/top_left_layout_color_black"
+        android:textSize="@dimen/tv_textsize_l" />
 
     <ImageView
         android:id="@+id/iv_mictype"

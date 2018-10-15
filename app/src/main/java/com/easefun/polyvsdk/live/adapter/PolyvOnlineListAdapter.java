@@ -1,7 +1,10 @@
 package com.easefun.polyvsdk.live.adapter;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -218,7 +221,6 @@ public class PolyvOnlineListAdapter extends AbsRecyclerViewAdapter {
     public void onBindViewHolder(ClickableViewHolder holder, int position) {
         if (holder instanceof ItemViewHolder) {
             ItemViewHolder viewHolder = (ItemViewHolder) holder;
-            viewHolder.tv_usertype.setVisibility(View.GONE);
             viewHolder.iv_mictype.setVisibility(View.GONE);
             viewHolder.tv_speak_status.setVisibility(View.GONE);
             PolyvOnlineLinkMicUsersEntity.OnlineLinkMicUser onlineLinkMicUser = lists.get(position);
@@ -233,16 +235,21 @@ public class PolyvOnlineListAdapter extends AbsRecyclerViewAdapter {
                 viewHolder.tv_nickname.setText(onlineLinkMicUser.nick + "(我)");
             else
                 viewHolder.tv_nickname.setText(onlineLinkMicUser.nick);
-            if (onlineLinkMicUser.isTeacherType()) {
-                viewHolder.tv_usertype.setText("讲师");
+            //设置头衔
+            if (onlineLinkMicUser.authorization != null) {
+                viewHolder.tv_usertype.setText(onlineLinkMicUser.authorization.getActor());
+                viewHolder.tv_usertype.setTextColor(Color.parseColor(onlineLinkMicUser.authorization.getfColor()));
+                viewHolder.tv_usertype.getBackground().setColorFilter(Color.parseColor(onlineLinkMicUser.authorization.getBgColor()), PorterDuff.Mode.SRC_OVER);
                 viewHolder.tv_usertype.setVisibility(View.VISIBLE);
-            } else if (onlineLinkMicUser.isManagerType()) {
-                viewHolder.tv_usertype.setText("管理员");
+            } else if (!TextUtils.isEmpty(onlineLinkMicUser.actor)) {
+                viewHolder.tv_usertype.setText(onlineLinkMicUser.actor);
+                viewHolder.tv_usertype.setTextColor(Color.WHITE);
+                viewHolder.tv_usertype.setBackgroundResource(R.drawable.poyv_tv_actor_color);
                 viewHolder.tv_usertype.setVisibility(View.VISIBLE);
-            } else if (onlineLinkMicUser.isAssistantType()) {
-                viewHolder.tv_usertype.setText("助教");
-                viewHolder.tv_usertype.setVisibility(View.VISIBLE);
+            } else {
+                viewHolder.tv_usertype.setVisibility(View.GONE);
             }
+            //设置状态
             if (onlineLinkMicUser.isJoinStatus()) {
                 viewHolder.iv_mictype.setVisibility(View.VISIBLE);
                 viewHolder.tv_speak_status.setText("发言中");

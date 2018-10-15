@@ -3,11 +3,13 @@ package com.easefun.polyvsdk.live.adapter;
 import android.content.Context;
 import android.graphics.Bitmap.Config;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -176,6 +178,7 @@ public class PolyvChatAdapter extends BaseAdapter implements OnClickListener {
         final TextView tv_time = PolyvViewHolder.get(convertView, R.id.tv_time);
         final TextView tv_name = PolyvViewHolder.get(convertView, R.id.tv_name);
         final TextView tv_notice = PolyvViewHolder.get(convertView, R.id.tv_notice);
+        final TextView tv_actor = PolyvViewHolder.get(convertView, R.id.tv_actor);
         ll_parent.setOnClickListener(this);
         if (message.getChatType() != PolyvChatMessage.CHATTYPE_RECEIVE_NOTICE) {
             textImageLoader.displayTextImage(message.getValues()[0], tv_msg);
@@ -191,6 +194,21 @@ public class PolyvChatAdapter extends BaseAdapter implements OnClickListener {
             case PolyvChatMessage.CHATTYPE_RECEIVE:
                 tv_name.setText(user.getNick());
                 ImageLoader.getInstance().displayImage(user.getPic(), iv_avatar, options);
+                //设置头衔
+                PolyvChatMessage.User.Authorization authorization = user.getAuthorization();
+                if (authorization != null) {
+                    tv_actor.setText(authorization.getActor());
+                    tv_actor.setTextColor(Color.parseColor(authorization.getfColor()));
+                    tv_actor.getBackground().setColorFilter(Color.parseColor(authorization.getBgColor()), PorterDuff.Mode.SRC_OVER);
+                    tv_actor.setVisibility(View.VISIBLE);
+                } else if (!TextUtils.isEmpty(user.getActor())) {
+                    tv_actor.setText(user.getActor());
+                    tv_actor.setTextColor(Color.WHITE);
+                    tv_actor.setBackgroundResource(R.drawable.poyv_tv_actor_color);
+                    tv_actor.setVisibility(View.VISIBLE);
+                } else {
+                    tv_actor.setVisibility(View.GONE);
+                }
                 break;
             // 聊天室的一些通知信息
             case PolyvChatMessage.CHATTYPE_RECEIVE_NOTICE:
