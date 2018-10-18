@@ -198,8 +198,20 @@ public class PolyvChatAdapter extends BaseAdapter implements OnClickListener {
                 PolyvChatMessage.User.Authorization authorization = user.getAuthorization();
                 if (authorization != null) {
                     tv_actor.setText(authorization.getActor());
-                    tv_actor.setTextColor(Color.parseColor(authorization.getfColor()));
-                    tv_actor.getBackground().setColorFilter(Color.parseColor(authorization.getBgColor()), PorterDuff.Mode.SRC_OVER);
+                    int fcolor;
+                    try {
+                        fcolor = Color.parseColor(authorization.getfColor());
+                    } catch (Exception e) {
+                        fcolor = Color.parseColor("#ffffff");
+                    }
+                    int bgColor;
+                    try {
+                        bgColor = Color.parseColor(authorization.getBgColor());
+                    } catch (Exception e) {
+                        bgColor = Color.parseColor("#4A90E2");
+                    }
+                    tv_actor.setTextColor(fcolor);
+                    tv_actor.getBackground().setColorFilter(bgColor, PorterDuff.Mode.SRC_OVER);
                     tv_actor.setVisibility(View.VISIBLE);
                 } else if (!TextUtils.isEmpty(user.getActor())) {
                     tv_actor.setText(user.getActor());

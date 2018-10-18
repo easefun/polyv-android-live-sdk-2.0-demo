@@ -238,8 +238,20 @@ public class PolyvOnlineListAdapter extends AbsRecyclerViewAdapter {
             //设置头衔
             if (onlineLinkMicUser.authorization != null) {
                 viewHolder.tv_usertype.setText(onlineLinkMicUser.authorization.getActor());
-                viewHolder.tv_usertype.setTextColor(Color.parseColor(onlineLinkMicUser.authorization.getfColor()));
-                viewHolder.tv_usertype.getBackground().setColorFilter(Color.parseColor(onlineLinkMicUser.authorization.getBgColor()), PorterDuff.Mode.SRC_OVER);
+                int fcolor;
+                try {
+                    fcolor = Color.parseColor(onlineLinkMicUser.authorization.getfColor());
+                } catch (Exception e) {
+                    fcolor = Color.parseColor("#ffffff");
+                }
+                int bgColor;
+                try {
+                    bgColor = Color.parseColor(onlineLinkMicUser.authorization.getBgColor());
+                } catch (Exception e) {
+                    bgColor = Color.parseColor("#4A90E2");
+                }
+                viewHolder.tv_usertype.setTextColor(fcolor);
+                viewHolder.tv_usertype.getBackground().setColorFilter(bgColor, PorterDuff.Mode.SRC_OVER);
                 viewHolder.tv_usertype.setVisibility(View.VISIBLE);
             } else if (!TextUtils.isEmpty(onlineLinkMicUser.actor)) {
                 viewHolder.tv_usertype.setText(onlineLinkMicUser.actor);
