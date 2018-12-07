@@ -2,7 +2,7 @@
 polyv-android-live-sdk-2.0-demo
 ===
 [![build passing](https://img.shields.io/badge/build-passing-brightgreen.svg)](#)
-[![GitHub release](https://img.shields.io/badge/release-v2.3.0-blue.svg)](https://github.com/easefun/polyv-android-live-sdk-2.0-demo/releases/tag/v2.3.0)
+[![GitHub release](https://img.shields.io/badge/release-v2.5.4-blue.svg)](https://github.com/easefun/polyv-android-live-sdk-2.0-demo/releases/tag/v2.5.4)
 #### _polyv-android-live-sdk-2.0_（以下简称**liveSDK2.0**）是什么？
 liveSDK2.0是Polyv为开发者用户提供的直播观看SDK ，是jar文件。易于集成，内部包含`直播播放` `聊天室`功能。首先需要在[Polyv官网](http://www.polyv.net)注册账户并开通直播功能，然后集成LiveSDK2.0到你的项目中。
 #### _polyv-android-live-sdk-2.0-demo_（以下简称**liveSDK2.0demo**）是什么？
