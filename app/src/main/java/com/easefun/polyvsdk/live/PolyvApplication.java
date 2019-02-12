@@ -8,6 +8,7 @@ import android.util.Log;
 import com.easefun.polyvsdk.PolyvDevMountInfo;
 import com.easefun.polyvsdk.PolyvSDKClient;
 import com.easefun.polyvsdk.PolyvSDKUtil;
+import com.easefun.polyvsdk.common.PolyvConstant;
 import com.easefun.polyvsdk.live.chat.PolyvChatManager;
 import com.easefun.polyvsdk.live.chat.linkmic.module.PolyvLinkMicManager;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -18,12 +19,7 @@ import java.io.File;
 //继承的类是为了解决64K 引用限制
 public class PolyvApplication extends MultiDexApplication {
     public static final String TAG = PolyvApplication.class.getSimpleName();
-    /**
-     * 登录聊天室/ppt直播/获取回放列表所需，请填写自己的appId和appSecret，否则无法登陆。
-     * appId和appSecret可以在直播系统管理后台的用户信息页的API设置中用获取。
-     */
-    public static final String appId = "";
-    public static final String appSecret = "";
+
 
     @Override
     public void onCreate() {
@@ -43,7 +39,7 @@ public class PolyvApplication extends MultiDexApplication {
         // 初始化实例
         PolyvLiveSDKClient.getInstance();
         // 初始化聊天室配置
-        PolyvChatManager.initConfig(appId, appSecret);
+        PolyvChatManager.initConfig(PolyvConstant.appId, PolyvConstant.appSecret);
         // 初始化连麦配置
         PolyvLinkMicManager.init(this);
     }

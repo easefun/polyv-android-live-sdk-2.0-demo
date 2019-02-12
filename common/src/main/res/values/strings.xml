@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">POLYV直播</string>
+    <string name="unknow">未知</string>
+    <string name="live_bitrate_changetitle">- 选择当前清晰度 -</string>
+    <string name="live_bitrate_float_tip">您当前网络状态不稳定，建议您切换至</string>
+
+    <string-array name="bit_arrys">
+        <item>标清</item>
+        <item>高清</item>
+        <item>超清</item>
+    </string-array>
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/top_sline_color_gray">
+
+    <Button
+        android:id="@+id/bt_speak"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/center_tab_height"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/polyv_tv_press"
+        android:text="申请发言"
+        android:textColor="@color/top_layout_color_white"
+        android:textSize="@dimen/tv_textsize_l"
+        android:visibility="invisible" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bt_speak">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_online"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fadingEdge="none"
+            android:overScrollMode="never" />
+
+        <ProgressBar
+            android:id="@+id/pb_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+</RelativeLayout>

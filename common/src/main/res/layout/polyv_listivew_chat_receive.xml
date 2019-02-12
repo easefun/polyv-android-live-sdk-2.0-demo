@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/tv_margintop_l"
+        android:text="2016/9/11 10:10:18"
+        android:textColor="@color/bottom_et_color_gray"
+        android:textSize="@dimen/tv_textsize_s"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/tv_margintop_l">
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="@dimen/iv_height"
+            android:layout_height="@dimen/iv_height"
+            android:layout_marginLeft="@dimen/iv_marginleft_l_l"
+            android:layout_marginRight="@dimen/common_margin"
+            android:src="@drawable/polyv_avatar_def" />
+
+        <LinearLayout
+            android:id="@+id/ll_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/iv_marginleft_l_l"
+            android:layout_toRightOf="@id/iv_avatar"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_actor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dp"
+                    android:background="@drawable/poyv_tv_actor_color"
+                    android:paddingBottom="1dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="1dp"
+                    android:text="VIP3"
+                    android:textColor="@color/top_layout_color_white"
+                    android:textSize="@dimen/tv_textsize_s" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="助教 小浩浩"
+                    android:textColor="@color/top_tv_color_gray"
+                    android:textSize="@dimen/tv_textsize_s" />
+            </LinearLayout>
+
+
+            <pl.droidsonroids.gif.GifSpanTextView
+                android:id="@+id/tv_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/common_margin"
+                android:background="@drawable/polyv_chatfrom_bg_normal"
+                android:gravity="center_vertical"
+                android:padding="@dimen/et_padding"
+                android:text="这是一条很长的信息这是一条很长的信息这是一条很长的信息这是一条很长的信息这是一条很长的信息这是一条很长的信息这是一条很长的信息这是一条很长的信息"
+                android:textColor="@color/left_et_color_gray"
+                android:textSize="@dimen/tv_textsize" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

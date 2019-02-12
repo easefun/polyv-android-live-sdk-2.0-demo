@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/top_sline_color_gray">
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/iv_margin_top_l"
+        android:src="@drawable/poly_live_logo" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/iv_marginbottom"
+        android:src="@drawable/polyv_footer" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="53dp"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/common_padding"
+        android:paddingRight="@dimen/common_padding"
+        android:layout_below="@+id/iv_logo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <EditText
+            android:id="@+id/et_userid"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/et_height"
+            android:background="@drawable/polyv_et_corners_n"
+            android:digits="1234567890qwertyuiopasdfghjklzxcvbnm"
+            android:hint="USERID"
+            android:padding="@dimen/et_padding"
+            android:textColor="@color/top_et_color_gray"
+            android:textColorHint="@color/top_et_color_gray"
+            android:textCursorDrawable="@drawable/polyv_et_cursor_color"
+            android:textSize="@dimen/tv_textsize" />
+
+        <EditText
+            android:id="@+id/et_channelid"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/et_height"
+            android:layout_marginTop="@dimen/et_margin_top"
+            android:background="@drawable/polyv_et_corners_n"
+            android:hint="频道号"
+            android:inputType="number"
+            android:padding="@dimen/et_padding"
+            android:textColor="@color/top_et_color_gray"
+            android:textColorHint="@color/top_et_color_gray"
+            android:textCursorDrawable="@drawable/polyv_et_cursor_color"
+            android:textSize="@dimen/tv_textsize" />
+
+        <TextView
+            android:id="@+id/tv_playtype"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/et_height"
+            android:layout_marginTop="@dimen/et_margin_top"
+            android:background="@drawable/polyv_press_gray_t_dgray"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/et_padding"
+            android:text="请选择观看类型"
+            android:textColor="@color/top_layout_color_white"
+            android:textSize="@dimen/tv_textsize" />
+
+        <TextView
+            android:id="@+id/tv_login"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/et_height"
+            android:layout_marginTop="@dimen/tv_margintop"
+            android:background="@drawable/polyv_tv_corners"
+            android:gravity="center"
+            android:text="登录"
+            android:textColor="@color/top_layout_color_white"
+            android:textSize="@dimen/tv_textsize" />
+    </LinearLayout>
+</RelativeLayout>
