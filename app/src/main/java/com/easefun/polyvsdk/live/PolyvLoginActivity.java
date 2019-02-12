@@ -1,4 +1,4 @@
-package com.easefun.polyvsdk.common.activity;
+package com.easefun.polyvsdk.live;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -17,6 +17,9 @@ import android.widget.Toast;
 
 import com.easefun.polyvsdk.common.PolyvConstant;
 import com.easefun.polyvsdk.common.R;
+import com.easefun.polyvsdk.common.activity.PolyvLivePlayerActivity;
+import com.easefun.polyvsdk.common.activity.PolyvPPTLivePlayerActivity;
+import com.easefun.polyvsdk.common.activity.PolyvPlaybackListActivity;
 import com.easefun.polyvsdk.common.permission.PolyvPermission;
 import com.easefun.polyvsdk.common.playback.activity.PolyvPPTPbPlayerActivity;
 import com.easefun.polyvsdk.common.playback.activity.PolyvPbPlayerActivity;
