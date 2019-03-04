@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
-          package="com.easefun.polyvsdk.common">
+          package="com.easefun.polyvsdk.live">
 
     <!-- 直播所需权限 -->
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -34,7 +34,7 @@
         <!-- 如需初始为横屏，请在代码中使用PolyvPlayerMediaController.changeToLandscape()方法设置 -->
         <!-- 直播演示主类 -->
         <activity
-            android:name="com.easefun.polyvsdk.common.activity.PolyvLivePlayerActivity"
+            android:name="com.easefun.polyvsdk.live.activity.PolyvLivePlayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden">
@@ -46,7 +46,7 @@
         </activity>
         <!-- ppt直播演示主类 -->
         <activity
-            android:name="com.easefun.polyvsdk.common.activity.PolyvPPTLivePlayerActivity"
+            android:name="com.easefun.polyvsdk.live.activity.PolyvPPTLivePlayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden">
@@ -58,7 +58,7 @@
         </activity>
         <!-- 回放演示主类 -->
         <activity
-            android:name="com.easefun.polyvsdk.common.playback.activity.PolyvPbPlayerActivity"
+            android:name="com.easefun.polyvsdk.live.playback.activity.PolyvPbPlayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden">
@@ -70,7 +70,7 @@
         </activity>
         <!-- ppt回放演示主类 -->
         <activity
-            android:name="com.easefun.polyvsdk.common.playback.activity.PolyvPPTPbPlayerActivity"
+            android:name="com.easefun.polyvsdk.live.playback.activity.PolyvPPTPbPlayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden">
@@ -82,7 +82,7 @@
         </activity>
         <!-- 回放列表 -->
         <activity
-            android:name="com.easefun.polyvsdk.common.activity.PolyvPlaybackListActivity"
+            android:name="com.easefun.polyvsdk.live.activity.PolyvPlaybackListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden">

@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/common_margin_lr"
     android:paddingRight="@dimen/rl_paddingright">
 
-    <com.easefun.polyvsdk.common.view.PolyvGrayImageView
+    <com.easefun.polyvsdk.live.view.PolyvGrayImageView
         android:id="@+id/iv_cover"
         android:layout_width="@dimen/top_left_layout_width"
         android:layout_height="match_parent"

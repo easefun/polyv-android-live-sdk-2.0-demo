@@ -27,13 +27,13 @@
             android:src="@drawable/polyv_no_stream"
             android:visibility="gone"/>
 
-        <com.easefun.polyvsdk.common.player.PolyvPlayerLightView
+        <com.easefun.polyvsdk.live.player.PolyvPlayerLightView
             android:id="@+id/polyv_player_light_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"/>
 
-        <com.easefun.polyvsdk.common.player.PolyvPlayerVolumeView
+        <com.easefun.polyvsdk.live.player.PolyvPlayerVolumeView
             android:id="@+id/polyv_player_volume_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             android:visibility="gone"
             android:alpha="0.2"/>
 
-        <com.easefun.polyvsdk.common.player.PolyvPlayerMediaController
+        <com.easefun.polyvsdk.live.player.PolyvPlayerMediaController
             android:id="@+id/polyv_player_media_controller"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -82,7 +82,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"/>
 
-        <com.easefun.polyvsdk.common.player.PolyvPlayerAuxiliaryView
+        <com.easefun.polyvsdk.live.player.PolyvPlayerAuxiliaryView
             android:id="@+id/polyv_player_auxiliary_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

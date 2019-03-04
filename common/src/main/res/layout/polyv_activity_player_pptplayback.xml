@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.easefun.polyvsdk.common.view.PolyvGestureLayout
+    <com.easefun.polyvsdk.live.view.PolyvGestureLayout
         android:id="@+id/view_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_center_player_height"
@@ -41,19 +41,19 @@
             android:textColor="@android:color/white"
             android:visibility="gone"/>
 
-        <com.easefun.polyvsdk.common.player.PolyvPlayerLightView
+        <com.easefun.polyvsdk.live.player.PolyvPlayerLightView
             android:id="@+id/polyv_player_light_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"/>
 
-        <com.easefun.polyvsdk.common.player.PolyvPlayerVolumeView
+        <com.easefun.polyvsdk.live.player.PolyvPlayerVolumeView
             android:id="@+id/polyv_player_volume_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"/>
 
-        <com.easefun.polyvsdk.common.playback.player.PolyvPlayerProgressView
+        <com.easefun.polyvsdk.live.playback.player.PolyvPlayerProgressView
             android:id="@+id/polyv_player_progress_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,19 +65,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <com.easefun.polyvsdk.common.playback.player.PolyvPlayerMediaController
+        <com.easefun.polyvsdk.live.playback.player.PolyvPlayerMediaController
             android:id="@+id/polyv_player_media_controller"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"/>
 
-        <com.easefun.polyvsdk.common.playback.player.PolyvPlayerQuestionView
+        <com.easefun.polyvsdk.live.playback.player.PolyvPlayerQuestionView
             android:id="@+id/polyv_player_question_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"/>
 
-        <com.easefun.polyvsdk.common.playback.player.PolyvPlayerAuditionView
+        <com.easefun.polyvsdk.live.playback.player.PolyvPlayerAuditionView
             android:id="@+id/polyv_player_audition_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -98,7 +98,7 @@
             android:layout_centerInParent="true"
             android:visibility="gone"/>
 
-        <com.easefun.polyvsdk.common.playback.player.PolyvPlayerAuxiliaryView
+        <com.easefun.polyvsdk.live.playback.player.PolyvPlayerAuxiliaryView
             android:id="@+id/polyv_player_auxiliary_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -114,12 +114,12 @@
             android:textColor="@android:color/white"
             android:visibility="gone"/>
 
-        <com.easefun.polyvsdk.common.playback.player.PolyvPlayerPreviewView
+        <com.easefun.polyvsdk.live.playback.player.PolyvPlayerPreviewView
             android:id="@+id/polyv_player_first_start_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"/>
-    </com.easefun.polyvsdk.common.view.PolyvGestureLayout>
+    </com.easefun.polyvsdk.live.view.PolyvGestureLayout>
 
     <FrameLayout
         android:id="@+id/fl_tab"
