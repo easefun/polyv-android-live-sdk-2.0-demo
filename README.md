@@ -1,3 +1,4 @@
+# 推荐使用新版[云课堂SDK](https://github.com/polyv/polyv-android-cloudClass-sdk-demo)，兼容纯视频和文档视频两种直播场景
 
 polyv-android-live-sdk-2.0-demo
 ===
