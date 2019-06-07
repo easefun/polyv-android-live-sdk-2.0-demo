@@ -34,6 +34,7 @@ import com.easefun.polyvsdk.live.playback.activity.PolyvPbPlayerActivity;
 import com.easefun.polyvsdk.live.player.PolyvPlayerAuxiliaryView;
 import com.easefun.polyvsdk.live.player.PolyvPlayerLightView;
 import com.easefun.polyvsdk.live.player.PolyvPlayerMediaController;
+import com.easefun.polyvsdk.live.player.PolyvPlayerPlayErrorView;
 import com.easefun.polyvsdk.live.player.PolyvPlayerVolumeView;
 import com.easefun.polyvsdk.live.util.AdmasterSdkUtils;
 import com.easefun.polyvsdk.live.util.PolyvKickAssist;
@@ -105,6 +106,10 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
      * 用于显示广告倒计时
      */
     private TextView advertCountDown = null;
+    /**
+     * 视频播放错误提示界面
+     */
+    private PolyvPlayerPlayErrorView playErrorView = null;
     private boolean isPlay = false;
     // 当再次直播的类型是ppt直播时，是否需要跳转到ppt直播的播放器
     private boolean isToOtherLivePlayer = true;
@@ -135,6 +140,7 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
         addFragment();
         findIdAndNew();
         initView();
+        initPlayErrorView();
 
         boolean isLandscape = getIntent().getBooleanExtra("isLandscape", false);
         if (isLandscape)
@@ -143,13 +149,7 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
             mediaController.changeToPortrait();
 
         setLivePlay(userId, channelId);
-
-//        String params = PolyvLiveSDKUtil.creatSignParams(PolyvApplication.appId,PolyvApplication.appSecret);
-//        videoView.getVideoDefinitions(params);
-
     }
-
-
 
     private void addFragment() {
         PolyvTabFragment tabFragment = new PolyvTabFragment();
@@ -184,6 +184,7 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
         lightView = (PolyvPlayerLightView) findViewById(R.id.polyv_player_light_view);
         volumeView = (PolyvPlayerVolumeView) findViewById(R.id.polyv_player_volume_view);
         advertCountDown = (TextView) findViewById(R.id.count_down);
+        playErrorView  = (PolyvPlayerPlayErrorView) findViewById(R.id.polyv_player_play_error_view);
 
         mediaController.initConfig(viewLayout, false);
         mediaController.setDanmuFragment(danmuFragment);
@@ -258,39 +259,7 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
         videoView.setOnVideoPlayErrorListener(new PolyvLiveVideoViewListener.OnVideoPlayErrorListener() {
             @Override
             public void onVideoPlayError(@NonNull PolyvLivePlayErrorReason errorReason) {
-                switch (errorReason.getType()) {
-                    case NETWORK_DENIED:
-                        Toast.makeText(PolyvLivePlayerActivity.this, "无法连接网络，请连接网络后播放", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case START_ERROR:
-                        Toast.makeText(PolyvLivePlayerActivity.this, "播放错误，请重新播放(error code " + PolyvLivePlayErrorReason.ErrorType.START_ERROR.getCode() + ")", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case CHANNEL_NULL:
-                        Toast.makeText(PolyvLivePlayerActivity.this, "频道信息获取失败，请重新播放(error code " + PolyvLivePlayErrorReason.ErrorType.CHANNEL_NULL.getCode() + ")", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case LIVE_UID_NOT_EQUAL:
-                        Toast.makeText(PolyvLivePlayerActivity.this, "用户id错误，请重新设置(error code" + PolyvLivePlayErrorReason.ErrorType.LIVE_UID_NOT_EQUAL.getCode() + ")", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case LIVE_CID_NOT_EQUAL:
-                        Toast.makeText(PolyvLivePlayerActivity.this, "频道号错误，请重新设置(error code " + PolyvLivePlayErrorReason.ErrorType.LIVE_CID_NOT_EQUAL.getCode() + ")", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case LIVE_PLAY_ERROR:
-                        Toast.makeText(PolyvLivePlayerActivity.this, "播放错误，请稍后重试(error code " + PolyvLivePlayErrorReason.ErrorType.LIVE_PLAY_ERROR.getCode() + ")", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case RESTRICT_NULL:
-                        Toast.makeText(PolyvLivePlayerActivity.this, "限制信息错误，请稍后重试(error code " + PolyvLivePlayErrorReason.ErrorType.RESTRICT_NULL.getCode() + ")", Toast.LENGTH_SHORT).show();
-                        break;
-
-                    case RESTRICT_ERROR:
-                        Toast.makeText(PolyvLivePlayerActivity.this, errorReason.getErrorMsg() + "(error code " + PolyvLivePlayErrorReason.ErrorType.RESTRICT_ERROR.getCode() + ")", Toast.LENGTH_SHORT).show();
-                        break;
-                }
+                playErrorView.show(errorReason);
             }
         });
 
@@ -460,12 +429,16 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
         });
     }
 
-    private void prepare() {
-        advertCountDown.setVisibility(View.GONE);
-        auxiliaryView.hide();
-        // 取消请求
-        if (marqueeUtils != null)
-            marqueeUtils.shutdown();
+    /**
+     * 初始化视频播放错误提示界面
+     */
+    private void initPlayErrorView() {
+        playErrorView.setRetryPlayListener(new PolyvPlayerPlayErrorView.IRetryPlayListener() {
+            @Override
+            public void onRetry() {
+                setLivePlay(userId, channelId);
+            }
+        });
     }
 
     public static Intent newIntent(Context context, String userId, String channelId, String chatUserId, String nickName, boolean isLandscape) {
@@ -489,6 +462,14 @@ public class PolyvLivePlayerActivity extends FragmentActivity {
     public void setLivePlay(String userId, String channelId) {
         prepare();
         videoView.setLivePlay(userId, channelId, false);
+    }
+
+    private void prepare() {
+        advertCountDown.setVisibility(View.GONE);
+        auxiliaryView.hide();
+        // 取消请求
+        if (marqueeUtils != null)
+            marqueeUtils.shutdown();
     }
 
     @Override

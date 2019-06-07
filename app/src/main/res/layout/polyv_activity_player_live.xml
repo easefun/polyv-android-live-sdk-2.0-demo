@@ -97,6 +97,13 @@
             android:text="广告也精彩：%d秒"
             android:textColor="@android:color/white"
             android:visibility="gone"/>
+
+        <!-- 播放错误提示界面 -->
+        <com.easefun.polyvsdk.live.player.PolyvPlayerPlayErrorView
+            android:id="@+id/polyv_player_play_error_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <FrameLayout
