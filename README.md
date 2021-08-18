@@ -1,4 +1,4 @@
-# 推荐使用新版[云课堂SDK](https://github.com/polyv/polyv-android-cloudClass-sdk-demo)，兼容纯视频和文档视频两种直播场景！
+# :exclamation: 该项目已废弃不再维护，请移步至：[保利威直播多场景SDK](https://github.com/polyv/polyv-android-livescenes-sdk-demo)
 polyv-android-live-sdk-2.0-demo
 ===
 [![build passing](https://img.shields.io/badge/build-passing-brightgreen.svg)](#)
